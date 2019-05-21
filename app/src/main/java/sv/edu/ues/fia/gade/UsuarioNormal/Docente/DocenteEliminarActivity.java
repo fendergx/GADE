@@ -8,19 +8,19 @@ import android.widget.Toast;
 
 import sv.edu.ues.fia.gade.R;
 import sv.edu.ues.fia.gade.UsuarioNormal.Docente.Docente;
-import sv.edu.ues.fia.gade.UsuarioNormal.Docente.ControlDB;
+import sv.edu.ues.fia.gade.controlBaseDato.controlDB;
 
 public class DocenteEliminarActivity extends Activity
 {
     EditText editIdDoc;
-    ControlDB controlhelper;
+    controlDB controlhelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_docente_eliminar);
-        //controlhelper = new ControlDB(this);
+        controlhelper = new controlDB(this);
         editIdDoc = (EditText)findViewById(R.id.editIdDoc);
     }
     public void eliminarDocente(View v)
@@ -29,8 +29,8 @@ public class DocenteEliminarActivity extends Activity
         Docente docente = new Docente();
         docente.setIdDocente(Integer.parseInt(editIdDoc.getText().toString()));
         //controlhelper.abrir();
-        //regEliminadas = controlhelper.eliminarDocente(docente);
-        //controlhelper.close();
-        //Toast.makeText(this, regEliminadas, Toast.LENGTH_SHORT).show();
+        regEliminadas = controlhelper.eliminarDocente(docente);
+        controlhelper.close();
+        Toast.makeText(this, regEliminadas, Toast.LENGTH_SHORT).show();
     }
 }

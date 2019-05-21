@@ -200,6 +200,10 @@ public class controlDB extends SQLiteOpenHelper{
                 insertUser(u.getUsername(),u.getClave(),u.getTipo());
             }
 
+            for(Docente d : docentes){
+                insertDocente(d);
+            }
+
 
             return true;
         }catch (Exception e){

@@ -8,19 +8,19 @@ import android.widget.Toast;
 
 import sv.edu.ues.fia.gade.R;
 import sv.edu.ues.fia.gade.UsuarioNormal.Docente.Docente;
-import sv.edu.ues.fia.gade.UsuarioNormal.Docente.ControlDB;
+import sv.edu.ues.fia.gade.controlBaseDato.controlDB;
 
 public class DocenteInsertarActivity extends Activity
 {
 
-    ControlDB helper;
+    controlDB helper;
     EditText editIdDoc, editNomDoc, editIdEscuela;
 
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_docente_insertar);
-        //helper = new ControlDB(this);
+        helper = new controlDB(this);
         editIdDoc = (EditText) findViewById(R.id.editIdDoc);
         editIdEscuela = (EditText) findViewById(R.id.editIdEscuela);
         editNomDoc = (EditText) findViewById(R.id.editNomDoc);
@@ -36,9 +36,9 @@ public class DocenteInsertarActivity extends Activity
         docente.setIdEscuela(idEscuela);
         docente.setNombreDoc(nombreDoc);
         //helper.abrir();
-        //regInsertados=helper.insertDocente(docente);
-        //helper.close();
-        //Toast.makeText(this, regInsertados, Toast.LENGTH_SHORT).show();
+        regInsertados = helper.insertDocente(docente);
+        helper.close();
+        Toast.makeText(this, regInsertados, Toast.LENGTH_SHORT).show();
 
     }
     public void limpiarTexto(View v)

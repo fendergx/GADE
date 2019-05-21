@@ -8,12 +8,12 @@ import android.widget.Toast;
 
 import sv.edu.ues.fia.gade.UsuarioNormal.Docente.Docente;
 import sv.edu.ues.fia.gade.R;
-import sv.edu.ues.fia.gade.UsuarioNormal.Docente.ControlDB;
+import sv.edu.ues.fia.gade.controlBaseDato.controlDB;
 
 
 public class DocenteConsultarActivity extends Activity
 {
-    ControlDB helper;
+    controlDB helper;
 
     EditText editIdDoc;
     EditText editIdEscuela;
@@ -24,7 +24,7 @@ public class DocenteConsultarActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_docente_consultar);
-        //helper = new ControlDB(this);
+        helper = new controlDB(this);
 
         editIdDoc = (EditText) findViewById(R.id.editIdDoc);
         editIdEscuela = (EditText) findViewById(R.id.editIdEscuela);
@@ -35,15 +35,15 @@ public class DocenteConsultarActivity extends Activity
     {
 
         //helper.abrir();
-        //Docente docente = helper.consultarDocente(editIdDoc.getText().toString());
-        //helper.close();
+        Docente docente = helper.consultarDocente(editIdDoc.getText().toString());
+        helper.close();
 
-        //if(docente == null)
-        //    Toast.makeText(this, "Docente Con Identificador " + editIdDoc.getText().toString() + " no encontrado", Toast.LENGTH_LONG).show();
-        //else {
-        //    editNomDoc.setText(docente.getNombreDoc());
-        //    editIdEscuela.setText(String.valueOf(docente.getIdEscuela()));
-        //}
+        if(docente == null)
+            Toast.makeText(this, "Docente Con Identificador " + editIdDoc.getText().toString() + " no encontrado", Toast.LENGTH_LONG).show();
+        else {
+            editNomDoc.setText(docente.getNombreDoc());
+            editIdEscuela.setText(String.valueOf(docente.getIdEscuela()));
+        }
     }
 
     public void limpiarTexto(View v)
