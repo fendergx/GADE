@@ -38,5 +38,11 @@
     <string name="formato_fecha">dd/mm/yyyy</string>
     <string name="formato_hora">hh:mm</string>
     <string name="titlulo_pickers">Horario</string>
+        <!-- Insertar -->
+        <string name="idHorario">idHorario</string>
+        <string name="desde">desde</string>
+        <string name="hasta">hasta</string>
+        <string name="dia">dia</string>
+        <!-- End of Insertar -->
     <!-- End of Horario Strings -->
 </resources>
