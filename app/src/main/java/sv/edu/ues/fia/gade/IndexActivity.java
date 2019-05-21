@@ -12,8 +12,8 @@ import android.widget.ListView;
 
 
 public class IndexActivity extends ListActivity {
-    String[] menu= {"Solicitar Local", "Consultar Reservas","Modificar Reserva", "Eliminar Reservas"};
-    String[] valores={"SolicitarLocalActivity", "ConsultarReservaActivity","ModificarReservaActivity", "EliminarReservaActivity"};
+    String[] menu= {"Docente","Solicitar Local", "Consultar Reservas","Modificar Reserva", "Eliminar Reservas"};
+    String[] valores={"Docente.DocenteGestionarActivity", "ConsultarReservaActivity","ModificarReservaActivity", "EliminarReservaActivity"};
 
 
     @Override

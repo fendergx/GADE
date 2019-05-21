@@ -9,6 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".UsuarioNormal.Docente.DocenteGestionarActivity"></activity>
+        <activity android:name=".UsuarioNormal.Docente.DocenteEliminarActivity" />
+        <activity android:name=".UsuarioNormal.Docente.DocenteInsertarActivity" />
+        <activity android:name=".UsuarioNormal.Docente.DocenteConsultarActivity" />
+        <activity android:name=".UsuarioNormal.Docente.DocenteActualizarActivity" />
+        <activity android:name=".UsuarioNormal.Docente.DocenteActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +29,7 @@
         <activity android:name=".UsuarioNormal.SolicitarLocalActivity" />
         <activity android:name=".UsuarioNormal.ModificarReservaActivity" />
         <activity android:name=".UsuarioNormal.ConsultarReservaActivity" />
-        <activity android:name=".UsuarioNormal.EliminarReservaActivity"></activity>
+        <activity android:name=".UsuarioNormal.EliminarReservaActivity" />
     </application>
 
 </manifest>
