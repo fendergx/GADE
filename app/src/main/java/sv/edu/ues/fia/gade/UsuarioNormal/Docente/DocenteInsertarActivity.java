@@ -20,7 +20,7 @@ public class DocenteInsertarActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_docente_insertar);
-        helper = new ControlDB(this);
+        //helper = new ControlDB(this);
         editIdDoc = (EditText) findViewById(R.id.editIdDoc);
         editIdEscuela = (EditText) findViewById(R.id.editIdEscuela);
         editNomDoc = (EditText) findViewById(R.id.editNomDoc);
@@ -35,10 +35,10 @@ public class DocenteInsertarActivity extends Activity
         docente.setIdDocente(idDocente);
         docente.setIdEscuela(idEscuela);
         docente.setNombreDoc(nombreDoc);
-        helper.abrir();
-        regInsertados=helper.insertDocente(docente);
-        helper.close();
-        Toast.makeText(this, regInsertados, Toast.LENGTH_SHORT).show();
+        //helper.abrir();
+        //regInsertados=helper.insertDocente(docente);
+        //helper.close();
+        //Toast.makeText(this, regInsertados, Toast.LENGTH_SHORT).show();
 
     }
     public void limpiarTexto(View v)

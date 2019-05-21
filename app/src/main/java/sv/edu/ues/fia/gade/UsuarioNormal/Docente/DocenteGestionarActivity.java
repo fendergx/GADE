@@ -20,8 +20,7 @@ public class DocenteGestionarActivity extends ListActivity
         super.onCreate(savedInstanceState);
         ListView listView = getListView();
         //listView.setBackgroundColor(Color.rgb(200, 255, 155));
-        ArrayAdapter<String> adapter = new
-                ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menu);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menu);
         setListAdapter(adapter);
     }
 
@@ -35,7 +34,7 @@ public class DocenteGestionarActivity extends ListActivity
         //l.getChildAt(position).setBackgroundColor(Color.rgb(128, 128, 0));
 
         try {
-            Class<?> clase = Class.forName("sv.edu.ues.fia.gade.UsuarioNormal." + nombreValue);
+            Class<?> clase = Class.forName("sv.edu.ues.fia.gade.UsuarioNormal.Docente." + nombreValue);
             Intent inte = new Intent(this, clase);
             this.startActivity(inte);
         } catch (ClassNotFoundException e) {

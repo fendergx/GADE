@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import sv.edu.ues.fia.gade.model.AccesoUsuario;
 import sv.edu.ues.fia.gade.model.OpcionCrud;
 import sv.edu.ues.fia.gade.model.Usuario;
+import sv.edu.ues.fia.gade.UsuarioNormal.Docente.Docente;
 
 /**
  * Created by HP on 20/5/2019.
@@ -48,10 +49,11 @@ public class controlDB extends SQLiteOpenHelper{
             //Tablas que faltaban.
             db.execSQL("create table ACTIVIDAD(IDACTIVIDAD INTEGER not null, IDTIPOACTIVIDAD INTEGER not null, IDDOCENTE INTEGER not null, NOMACTIVIDAD TEXT not null, primary key(IDACTIVIDAD, IDTIPOACTIVIDAD, IDDOCENTE))");
             db.execSQL("create table TIPOACTIVIDAD(IDTIPOACTIVIDAD INTEGER not null,NOMTIPOACTIVIDAD TEXT not null,primary key (IDTIPOACTIVIDAD))");
-            db.execSQL("create table DOCENTE(IDDOCENTE INTEGER not null,IDESCUELA INTEGER not null,NOMDOCENTE TEXT not null,primary key (IDDOCENTE, IDESCUELA))");
+            //db.execSQL("create table DOCENTE(IDDOCENTE INTEGER not null,IDESCUELA INTEGER not null,NOMDOCENTE TEXT not null,primary key (IDDOCENTE, IDESCUELA))");
             /*
             Agregar aqui sus tablas
             */
+            db.execSQL("create table DOCENTE(IDDOCENTE INTEGER not null,IDESCUELA INTEGER not null,NOMDOCENTE TEXT not null,primary key (IDDOCENTE))");
 
 
         }catch (Exception e){
@@ -68,7 +70,6 @@ public class controlDB extends SQLiteOpenHelper{
             db.execSQL("DROP TABLE IF EXISTS TIPOACTIVIDAD");
             db.execSQL("DROP TABLE IF EXISTS ACTIVIDAD");
             db.execSQL("DROP TABLE IF EXISTS DOCENTE");
-
         }catch (Exception e){
 
         }
@@ -176,6 +177,12 @@ public class controlDB extends SQLiteOpenHelper{
             option.add(new OpcionCrud("ELIMINAR RESERVACION",11,3));
             option.add(new OpcionCrud("SELECCIONAR RESERVACION",12,4));
 
+            //public boolean llenarDBGp01()
+            ArrayList<Docente> docentes = new ArrayList<>();
+            //Docentes
+            docentes.add(new Docente(3, 115, "Nelly"));
+            docentes.add(new Docente(5, 120, "Salvador German"));
+
 
             int i=1;
             for (OpcionCrud op : option){
@@ -212,6 +219,89 @@ public class controlDB extends SQLiteOpenHelper{
             Cursor cursor = db.rawQuery("Select * from USUARIO inner join  ACCESO ON USUARIO.USERNAME = ACCESO.USERNAME inner join OPCION on ACCESO.id=OPCION.ID",null);
             return cursor;
         }catch(Exception e){
+            return null;
+        }
+    }
+
+    // Metodos de Docente Maury
+    //encabezado
+    private static final String [] camposDocente = new String[] {"iddocente","idescuela","nomdocente"};
+
+    //Metodos crud
+    public  String insertDocente(Docente docente)   // tambiÈn lo necesitaba
+
+    {
+        String regInsertado = "Docente: ";
+        long contador = 0;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("IDDOCENTE",docente.getIdDocente());
+        contentValues.put("IDESCUELA", docente.getIdEscuela());
+        contentValues.put("NOMDOCENTE", docente.getNombreDoc());
+        contador = db.insert("DOCENTE",null,contentValues);
+        if(contador == -1 || contador == 0){
+            regInsertado = "Ya existe el docente." + docente.getIdDocente();
+        }else{
+            regInsertado = regInsertado + contador;
+        }
+        return regInsertado;
+
+    }
+
+    public String eliminarDocente(Docente docente)
+    {
+        String regEliminado = "Se elimino el docente #";
+        SQLiteDatabase db = this.getWritableDatabase();
+        String idDocente = String.valueOf(docente.getIdDocente());
+        String [] id = {idDocente};
+        int res = db.delete("DOCENTE", "IDDOCENTE = ?",id);
+
+        if(res>0){
+            regEliminado += idDocente;
+        }else{
+            regEliminado = "Este registro no existe";
+        }
+        return regEliminado;
+    }
+
+    public String actualizarDocente(Docente docente)
+    {
+        String regAc = "Registro Actualizado #";
+        String idDocente = String.valueOf(docente.getIdDocente());
+        String[] id = {idDocente};
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("nomdocente",docente.getNombreDoc());
+        cv.put("idescuela",docente.getIdEscuela());
+        int resultado = db.update("docente",cv,"iddocente = ?",id);
+
+        if(resultado>0){
+            regAc += idDocente;
+        }else{
+            regAc = "No se encuentra registro Docente para ser actualizado";
+        }
+        return regAc;
+
+    }
+
+
+    public Docente consultarDocente(String idDocente)
+    {
+        String [] id = {idDocente};
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query("DOCENTE", camposDocente, "IDDOCENTE = ?", id, null, null, null);
+        if(cursor.moveToFirst())
+        {
+            Docente docente = new Docente();
+            docente.setIdDocente(cursor.getInt(0));
+            docente.setIdEscuela(cursor.getInt(1));
+            docente.setNombreDoc(cursor.getString(2));
+            return  docente;
+        }
+        else
+        {
             return null;
         }
     }

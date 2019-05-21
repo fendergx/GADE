@@ -20,7 +20,7 @@ public class DocenteEliminarActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_docente_eliminar);
-        controlhelper = new ControlDB(this);
+        //controlhelper = new ControlDB(this);
         editIdDoc = (EditText)findViewById(R.id.editIdDoc);
     }
     public void eliminarDocente(View v)
@@ -28,9 +28,9 @@ public class DocenteEliminarActivity extends Activity
         String regEliminadas;
         Docente docente = new Docente();
         docente.setIdDocente(Integer.parseInt(editIdDoc.getText().toString()));
-        controlhelper.abrir();
-        regEliminadas = controlhelper.eliminarDocente(docente);
-        controlhelper.close();
-        Toast.makeText(this, regEliminadas, Toast.LENGTH_SHORT).show();
+        //controlhelper.abrir();
+        //regEliminadas = controlhelper.eliminarDocente(docente);
+        //controlhelper.close();
+        //Toast.makeText(this, regEliminadas, Toast.LENGTH_SHORT).show();
     }
 }

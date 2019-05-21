@@ -24,7 +24,7 @@ public class DocenteConsultarActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_docente_consultar);
-        helper = new ControlDB(this);
+        //helper = new ControlDB(this);
 
         editIdDoc = (EditText) findViewById(R.id.editIdDoc);
         editIdEscuela = (EditText) findViewById(R.id.editIdEscuela);
@@ -34,16 +34,16 @@ public class DocenteConsultarActivity extends Activity
     public void consultarDocente(View v)
     {
 
-        helper.abrir();
-        Docente docente = helper.consultarDocente(editIdDoc.getText().toString());
-        helper.close();
+        //helper.abrir();
+        //Docente docente = helper.consultarDocente(editIdDoc.getText().toString());
+        //helper.close();
 
-        if(docente == null)
-            Toast.makeText(this, "Docente Con Identificador " + editIdDoc.getText().toString() + " no encontrado", Toast.LENGTH_LONG).show();
-        else {
-            editNomDoc.setText(docente.getNombreDoc());
-            editIdEscuela.setText(String.valueOf(docente.getIdEscuela()));
-        }
+        //if(docente == null)
+        //    Toast.makeText(this, "Docente Con Identificador " + editIdDoc.getText().toString() + " no encontrado", Toast.LENGTH_LONG).show();
+        //else {
+        //    editNomDoc.setText(docente.getNombreDoc());
+        //    editIdEscuela.setText(String.valueOf(docente.getIdEscuela()));
+        //}
     }
 
     public void limpiarTexto(View v)
