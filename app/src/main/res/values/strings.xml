@@ -15,25 +15,28 @@
     <string name="agregarU">agregar usuario</string>
 
     <!-- Docente Strings -->
-        <!-- Actualizar -->
-            <string name="idDocente">idDocente</string>
-            <string name="nombreDoc">nombreDoc</string>
-            <string name="idEscuela">idEscuela</string>
-            <string name="actualizar">actualizar</string>
-            <string name="limpiar">limpiar</string>
-        <!-- End of Actualizar -->
-        <!-- Consultar -->
-            <string name="consultar">consultar</string>
-        <!-- end of Consultar -->
-        <!-- Insertar -->
-            <string name="opciones">opciones</string>
-            <string name="insertar">insertar</string>
-        <!-- End of Insertar -->
-        <!-- Eliminar -->
-            <string name="eliminar">eliminar</string>
-        <!-- End of Eliminar -->
+    <!-- Actualizar -->
+    <string name="idDocente">idDocente</string>
+    <string name="nombreDoc">nombreDoc</string>
+    <string name="idEscuela">idEscuela</string>
+    <string name="actualizar">actualizar</string>
+    <string name="limpiar">limpiar</string>
+    <!-- End of Actualizar -->
+    <!-- Consultar -->
+    <string name="consultar">consultar</string>
+    <!-- end of Consultar -->
+    <!-- Insertar -->
+    <string name="opciones">opciones</string>
+    <string name="insertar">insertar</string>
+    <!-- End of Insertar -->
+    <!-- Eliminar -->
+    <string name="eliminar">eliminar</string>
+    <!-- End of Eliminar -->
     <!-- End of Docente Strings -->
 
     <!-- Hotario Strings -->
+    <string name="formato_fecha">dd/mm/yyyy</string>
+    <string name="formato_hora">hh:mm</string>
+    <string name="titlulo_pickers">Horario</string>
     <!-- End of Horario Strings -->
 </resources>
