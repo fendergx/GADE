@@ -17,13 +17,6 @@
             android:id="@+id/et_hora_desde"
             android:inputType="text"
             android:maxLength="30" />
-        <ImageButton
-            android:id="@+id/ib_obtener_hora_desde"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_access_time_black_24dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp" />
     </TableRow>
     <TableRow>
         <TextView android:text="@string/hasta" />
@@ -31,13 +24,6 @@
             android:id="@+id/et_hora_hasta"
             android:inputType="time"
             android:maxLength="5" />
-        <ImageButton
-            android:id="@+id/ib_obtener_hora_hasta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_access_time_black_24dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp" />
     </TableRow>
     <TableRow>
         <TextView android:text="@string/dia" />
@@ -52,8 +38,8 @@
 
     <TableRow>
         <Button
-            android:onClick="insertarHorario"
-            android:text="@string/insertar" />
+            android:onClick="consultarHorario"
+            android:text="@string/consultar" />
         <Button
             android:onClick="limpiarTexto"
             android:text="@string/limpiar" />

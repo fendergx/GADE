@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
+import sv.edu.ues.fia.gade.UsuarioNormal.Horario.Horario;
 import sv.edu.ues.fia.gade.model.AccesoUsuario;
 import sv.edu.ues.fia.gade.model.OpcionCrud;
 import sv.edu.ues.fia.gade.model.Usuario;
@@ -55,7 +56,9 @@ public class controlDB extends SQLiteOpenHelper{
             */
             db.execSQL("create table DOCENTE(IDDOCENTE INTEGER not null,IDESCUELA INTEGER not null,NOMDOCENTE TEXT not null,primary key (IDDOCENTE))");
 
-
+            //Horario
+            db.execSQL("CREATE TABLE HORARIO (IdHorario INTEGER PRIMARY KEY, desde TEXT, hasta TEXT, dia INTEGER)");
+            //End of Horario
         }catch (Exception e){
 
         }
@@ -70,6 +73,9 @@ public class controlDB extends SQLiteOpenHelper{
             db.execSQL("DROP TABLE IF EXISTS TIPOACTIVIDAD");
             db.execSQL("DROP TABLE IF EXISTS ACTIVIDAD");
             db.execSQL("DROP TABLE IF EXISTS DOCENTE");
+            //Horario
+            db.execSQL("DROP TABLE IF EXISTS HORARIO");
+            //End of Horario
         }catch (Exception e){
 
         }
@@ -204,6 +210,16 @@ public class controlDB extends SQLiteOpenHelper{
                 insertDocente(d);
             }
 
+            //Horario
+            ArrayList<Horario> horarios = new ArrayList<>();
+
+            horarios.add(new Horario(1, "06:20", "08:00", 1));
+            horarios.add(new Horario(1, "08:05", "09:45", 1));
+
+            for(Horario h : horarios) {
+                insertHorario(h);
+            }
+            //End of Horario
 
             return true;
         }catch (Exception e){
@@ -243,7 +259,7 @@ public class controlDB extends SQLiteOpenHelper{
         contentValues.put("IDDOCENTE",docente.getIdDocente());
         contentValues.put("IDESCUELA", docente.getIdEscuela());
         contentValues.put("NOMDOCENTE", docente.getNombreDoc());
-        contador = db.insert("DOCENTE",null,contentValues);
+        contador = db.insert("DOCENTE",null, contentValues);
         if(contador == -1 || contador == 0){
             regInsertado = "Ya existe el docente." + docente.getIdDocente();
         }else{
@@ -309,6 +325,97 @@ public class controlDB extends SQLiteOpenHelper{
             return null;
         }
     }
+
+    //Horario
+    public static final String columna1 = "IdHorario";
+    public static final String columna2 = "desde";
+    public static final String columna3 = "hasta";
+    public static final String columna4 = "dia";
+
+    public  String insertHorario(Horario horario) {
+        String regInsertado = "Horario: ";
+        long contador = 0;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(columna1, horario.getIdHorario());
+        contentValues.put(columna2, horario.getDesde());
+        contentValues.put(columna3, horario.getHasta());
+        contentValues.put(columna4, horario.getDia());
+
+        contador = db.insert("HORARIO",null, contentValues);
+
+        if(contador == -1 || contador == 0){
+            regInsertado = "Ya existe el horario." + horario.getIdHorario();
+        }else{
+            regInsertado = regInsertado + contador;
+        }
+        return regInsertado;
+    }
+
+    private static final String [] camposHorario = new String[] {"IdHorario", "desde", "hasta", "dia"};
+
+    public Horario consultarHorario(String idHorario)
+    {
+        String [] id = {idHorario};
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query("HORARIO", camposHorario, "IdHorario = ?", id, null, null, null);
+        if(cursor.moveToFirst())
+        {
+            Horario horario = new Horario();
+            horario.setIdHorario(cursor.getInt(0));
+            horario.setDesde(cursor.getString(1));
+            horario.setHasta(cursor.getString(2));
+            horario.setDia(cursor.getInt(3));
+            return horario;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public String actualizarHorario(Horario horario)
+    {
+        String regAc = "Registro Actualizado #";
+        String idHorario = String.valueOf(horario.getIdHorario());
+        String[] id = {idHorario};
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(columna2, horario.getDesde());
+        cv.put(columna3, horario.getHasta());
+        cv.put(columna4, horario.getDia());
+
+        int resultado = db.update("HORARIO", cv,"IdHorario = ?", id);
+
+        if(resultado>0){
+            regAc += idHorario;
+        }else{
+            regAc = "No se encuentra registro Horario para ser actualizado";
+        }
+        return regAc;
+
+    }
+
+    public String eliminarHorario(Horario horario)
+    {
+        String regEliminado = "Se elimino el Horario #";
+        SQLiteDatabase db = this.getWritableDatabase();
+        String idHorario = String.valueOf(horario.getIdHorario());
+        String [] id = {idHorario};
+        int res = db.delete("HORARIO", "IdHorario = ?",id);
+
+        if(res>0){
+            regEliminado += idHorario;
+        }else{
+            regEliminado = "Este registro no existe";
+        }
+        return regEliminado;
+    }
+    //End of Horario
 }
 
 

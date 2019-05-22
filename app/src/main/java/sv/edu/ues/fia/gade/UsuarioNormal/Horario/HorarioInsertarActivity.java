@@ -7,10 +7,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
 import sv.edu.ues.fia.gade.R;
+import sv.edu.ues.fia.gade.controlBaseDato.controlDB;
 
 public class HorarioInsertarActivity extends Activity implements View.OnClickListener {
 
@@ -31,10 +33,21 @@ public class HorarioInsertarActivity extends Activity implements View.OnClickLis
     EditText et_hora_hasta;
     ImageButton ib_hora_hasta;
 
+    EditText et_id_horario;
+    EditText et_dia;
+
+    controlDB helper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_horario_insertar);
+
+        helper = new controlDB(this);
+
+        et_id_horario = (EditText) findViewById(R.id.et_id_horario);
+        et_dia = (EditText) findViewById(R.id.et_dia);
+
         //Widget EditText donde se mostrara la hora obtenida
         et_hora_desde = (EditText) findViewById(R.id.et_hora_desde);
         //Widget ImageButton del cual usaremos el evento clic para obtener la hora
@@ -113,5 +126,31 @@ public class HorarioInsertarActivity extends Activity implements View.OnClickLis
 
             recogerHora.show();
         }
+    }
+
+
+    public void insertarHorario(View v) {
+        int idHorario = Integer.parseInt(et_id_horario.getText().toString());
+        String hora_desde = et_hora_desde.getText().toString();
+        String hora_hasta = et_hora_hasta.getText().toString();
+        int dia = Integer.parseInt(et_dia.getText().toString());
+
+        String regInsertados;
+
+        Horario horario = new Horario(idHorario, hora_desde, hora_hasta, dia);
+
+        //helper.abrir();
+
+        regInsertados = helper.insertHorario(horario);
+        helper.close();
+        Toast.makeText(this, regInsertados, Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void limpiarTexto(View v) {
+        et_id_horario.setText("");
+        et_hora_desde.setText("");
+        et_hora_hasta.setText("");
+        et_dia.setText("");
     }
 }

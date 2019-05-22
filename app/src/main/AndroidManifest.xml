@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UsuarioNormal.Horario.HorarioInsertarActivity"></activity>
+        <activity android:name=".UsuarioNormal.Horario.HorarioConsultarActivity"></activity>
+        <activity android:name=".UsuarioNormal.Horario.HorarioInsertarActivity" />
         <activity android:name=".UsuarioNormal.Horario.HorarioGestionarActivity" />
         <activity android:name=".UsuarioNormal.Docente.DocenteGestionarActivity" />
         <activity android:name=".UsuarioNormal.Docente.DocenteEliminarActivity" />
