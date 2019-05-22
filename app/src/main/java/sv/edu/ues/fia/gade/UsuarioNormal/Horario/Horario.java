@@ -8,7 +8,6 @@ public class Horario {
     private int dia;
 
     public Horario() {
-
     }
 
     public Horario(int idHorario, String desde, String hasta, int dia) {
