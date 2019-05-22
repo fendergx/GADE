@@ -18,7 +18,8 @@ import sv.edu.ues.fia.gade.UsuarioNormal.Docente.Docente;
  * Created by HP on 20/5/2019.
  */
 
-public class controlDB extends SQLiteOpenHelper{
+public class controlDB extends SQLiteOpenHelper {
+
     public static final String DATABASE_NAME = "datos.db";
     //AQUI LOS DATOS DE LAS TABLAS USUARIO, OPCION, ACCESO
     public static final String table_nameU = "USUARIO";
@@ -57,7 +58,7 @@ public class controlDB extends SQLiteOpenHelper{
             db.execSQL("create table DOCENTE(IDDOCENTE INTEGER not null,IDESCUELA INTEGER not null,NOMDOCENTE TEXT not null,primary key (IDDOCENTE))");
 
             //Horario
-            db.execSQL("CREATE TABLE HORARIO (IdHorario INTEGER PRIMARY KEY, desde TEXT, hasta TEXT, dia INTEGER)");
+            db.execSQL("CREATE TABLE HORARIO(IdHorario INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, desde TEXT NOT NULL, hasta TEXT NOT NULL, dia INTEGER NOT NULL)");
             //End of Horario
         }catch (Exception e){
 
@@ -158,15 +159,10 @@ public class controlDB extends SQLiteOpenHelper{
 
     public boolean llenarDBGp01(){
         try {
-            ArrayList<Usuario> users = new ArrayList<>();
+
+            //User
             ArrayList<OpcionCrud> option = new ArrayList<>();
             ArrayList<AccesoUsuario> accesoUsuarios = new ArrayList<>();
-            users.add(new Usuario("Ever","sio115",2));
-            users.add(new Usuario("Doris","pdm115",2));
-            users.add(new Usuario("Carlos","sic115",2));
-            users.add(new Usuario("Miguel","anf115",2));
-            users.add(new Usuario("Mauricio","tpi115",2));
-            users.add(new Usuario("Cesar","cos115",1));
 
             option.add(new OpcionCrud("CREAR USUARIO",1,1));
             option.add(new OpcionCrud("EDITAR USUARIO",2,2));
@@ -183,12 +179,14 @@ public class controlDB extends SQLiteOpenHelper{
             option.add(new OpcionCrud("ELIMINAR RESERVACION",11,3));
             option.add(new OpcionCrud("SELECCIONAR RESERVACION",12,4));
 
-            //public boolean llenarDBGp01()
-            ArrayList<Docente> docentes = new ArrayList<>();
-            //Docentes
-            docentes.add(new Docente(3, 115, "Nelly"));
-            docentes.add(new Docente(5, 120, "Salvador German"));
+            ArrayList<Usuario> users = new ArrayList<>();
 
+            users.add(new Usuario("Ever","sio115",2));
+            users.add(new Usuario("Doris","pdm115",2));
+            users.add(new Usuario("Carlos","sic115",2));
+            users.add(new Usuario("Miguel","anf115",1));
+            users.add(new Usuario("Mauricio","tpi115",2));
+            users.add(new Usuario("Cesar","cos115",1));
 
             int i=1;
             for (OpcionCrud op : option){
@@ -205,10 +203,18 @@ public class controlDB extends SQLiteOpenHelper{
             for (Usuario u : users){
                 insertUser(u.getUsername(),u.getClave(),u.getTipo());
             }
+            //End of User
+
+            //Docente
+            ArrayList<Docente> docentes = new ArrayList<>();
+
+            docentes.add(new Docente(3, 115, "Nelly"));
+            docentes.add(new Docente(5, 120, "Salvador German"));
 
             for(Docente d : docentes){
                 insertDocente(d);
             }
+            //End of Docente
 
             //Horario
             ArrayList<Horario> horarios = new ArrayList<>();
