@@ -8,8 +8,8 @@ public class Escuela {
     }
 
     public Escuela(int idEscuela, String nombre) {
-        setIdEscuela(idEscuela);
-        setNombre(nombre);
+        this.idEscuela = idEscuela;
+        this.nombre = nombre;
     }
 
     public void setIdEscuela(int idEscuela) {
@@ -22,5 +22,9 @@ public class Escuela {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getNombre() {
+        return nombre;
     }
 }

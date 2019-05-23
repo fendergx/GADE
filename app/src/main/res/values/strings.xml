@@ -45,4 +45,8 @@
     <string name="dia">dia</string>
     <!-- End of Insertar -->
     <!-- End of Horario Strings -->
+
+    <!-- Escuela Strings -->
+    <string name="nombreEscuela">nombre</string>
+    <!-- End of Escuela Strings -->
 </resources>

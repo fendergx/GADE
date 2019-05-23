@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".UsuarioNormal.Escuela.EscuelaInsertarActivity">
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="30dip"
+    android:stretchColumns="1" >
+    <TableRow>
+        <TextView android:text="@string/nombreEscuela" />
+        <EditText
+            android:id="@+id/et_nombre_escuela"
+            android:inputType="text"
+            android:maxLength="30" />
+    </TableRow>
 
-</android.support.constraint.ConstraintLayout>
+    <TableRow>
+        <TextView android:text="@string/opciones" />
+    </TableRow>
+
+    <TableRow>
+        <Button
+            android:onClick="insertarEscuela"
+            android:text="@string/insertar" />
+        <Button
+            android:onClick="limpiarTexto"
+            android:text="@string/limpiar" />
+    </TableRow>
+</TableLayout>

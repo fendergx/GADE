@@ -8,8 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class IndexActivity extends ListActivity {
-    String[] menu= {"Docente", "Horario", "Solicitar Local", "Consultar Reservas", "Modificar Reserva", "Eliminar Reservas"};
-    String[] valores={"Docente.DocenteGestionarActivity", "Horario.HorarioGestionarActivity", "ConsultarReservaActivity", "ModificarReservaActivity", "EliminarReservaActivity"};
+    String[] menu= {"Docente", "Horario", "Escuela", "Solicitar Local", "Consultar Reservas", "Modificar Reserva", "Eliminar Reservas"};
+    String[] valores={"Docente.DocenteGestionarActivity", "Horario.HorarioGestionarActivity", "Escuela.EscuelaGestionarActivity", "ConsultarReservaActivity", "ModificarReservaActivity", "EliminarReservaActivity"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

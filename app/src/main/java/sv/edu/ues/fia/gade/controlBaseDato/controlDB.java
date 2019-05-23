@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
+import sv.edu.ues.fia.gade.UsuarioNormal.Escuela.Escuela;
 import sv.edu.ues.fia.gade.UsuarioNormal.Horario.Horario;
 import sv.edu.ues.fia.gade.model.AccesoUsuario;
 import sv.edu.ues.fia.gade.model.OpcionCrud;
@@ -45,8 +46,12 @@ public class controlDB extends SQLiteOpenHelper {
             //End of Docente
 
             //Horario
-            db.execSQL("CREATE TABLE HORARIO(IdHorario INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, desde TEXT NOT NULL, hasta TEXT NOT NULL, dia INTEGER NOT NULL)");
+            db.execSQL("CREATE TABLE HORARIO(IdHorario INTEGER PRIMARY KEY AUTOINCREMENT, desde TEXT NOT NULL, hasta TEXT NOT NULL, dia INTEGER NOT NULL)");
             //End of Horario
+
+            //Escuela
+            db.execSQL("CREATE TABLE ESCUELA (idEscuela INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL);");
+            //End of Escuela
         }catch (Exception e){
 
         }
@@ -62,6 +67,7 @@ public class controlDB extends SQLiteOpenHelper {
             db.execSQL("DROP TABLE IF EXISTS ACTIVIDAD");
             db.execSQL("DROP TABLE IF EXISTS DOCENTE");
             db.execSQL("DROP TABLE IF EXISTS HORARIO");
+            db.execSQL("DROP TABLE IF EXISTS ESCUELA");
         }catch (Exception e){
 
         }
@@ -407,6 +413,85 @@ public class controlDB extends SQLiteOpenHelper {
         return regEliminado;
     }
     //End of Horario
+
+    //Escuela
+    private static final String [] camposEscuela = new String[] {"idEscuela", "nombre"};
+
+    public static final String escuelaCol1 = "idEscuela";
+    public static final String escuelaCol2 = "nombre";
+
+    public  String insertEscuela(Escuela escuela) {
+        String regInsertado = "Escuela: ";
+        long contador = 0;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(escuelaCol2, escuela.getNombre());
+
+        contador = db.insert("ESCUELA",null, contentValues);
+
+        if(contador == -1 || contador == 0){
+            regInsertado = "Ya existe el escuela." + escuela.getIdEscuela();
+        }else{
+            regInsertado = regInsertado + contador;
+        }
+        return regInsertado;
+    }
+
+    public Escuela consultarEscuela(String idEscuela) {
+        String [] id = {idEscuela};
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query("ESCUELA", camposEscuela, "idEscuela = ?", id, null, null, null);
+        if(cursor.moveToFirst())
+        {
+            Escuela escuela = new Escuela();
+            //escuela.setIdEscuela(cursor.getInt(0));
+            escuela.setNombre(cursor.getString(1));
+            return escuela;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public String actualizarEscuela(Escuela escuela) {
+        String regAc = "Registro Actualizado #";
+        String idEscuela = String.valueOf(escuela.getIdEscuela());
+        String[] id = {idEscuela};
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(escuelaCol2, escuela.getNombre());
+
+        int resultado = db.update("ESCUELA", cv,"idEscuela = ?", id);
+
+        if(resultado>0){
+            regAc += idEscuela;
+        } else {
+            regAc = "No se encuentra registro Escuela para ser actualizado";
+        }
+        return regAc;
+
+    }
+
+    public String eliminarEscuela(Escuela escuela) {
+        String regEliminado = "Se elimino la Escuela #";
+        SQLiteDatabase db = this.getWritableDatabase();
+        String idEscuela = String.valueOf(escuela.getIdEscuela());
+        String [] id = {idEscuela};
+        int res = db.delete("ESCUELA", "idEscuela = ?",id);
+
+        if(res>0){
+            regEliminado += idEscuela;
+        } else {
+            regEliminado = "Este registro no existe";
+        }
+        return regEliminado;
+    }
+    //End of Escuela
 }
 
 
