@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".UsuarioNormal.Local.LocalConsultarActivity"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Para Editar Presione un registro prologadamente" />
+    <LinearLayout
+        android:id="@+id/menuLinearLayout"
+        android:layout_below="@+id/midTableLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <Button
+            android:id="@+id/btnNuevoLocal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nuevo"/>
+
+    </LinearLayout>
+    <ListView
+        android:id="@+id/listaTipoAsignatura"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:scrollbarAlwaysDrawHorizontalTrack="true">
+    </ListView>
+
+    <Button
+        android:id="@+id/mostrarTipoLocal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mostrar Tipo de Local"/>
+</LinearLayout>

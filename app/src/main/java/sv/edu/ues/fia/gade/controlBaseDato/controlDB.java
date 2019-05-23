@@ -8,8 +8,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
+import sv.edu.ues.fia.gade.UsuarioNormal.Asignatura.Asignatura;
+import sv.edu.ues.fia.gade.UsuarioNormal.TipoAsignatura.TipoAsignatura;
 import sv.edu.ues.fia.gade.UsuarioNormal.Escuela.Escuela;
 import sv.edu.ues.fia.gade.UsuarioNormal.Horario.Horario;
+import sv.edu.ues.fia.gade.UsuarioNormal.Local.Local;
+import sv.edu.ues.fia.gade.UsuarioNormal.Prioridad.Prioridad;
+import sv.edu.ues.fia.gade.UsuarioNormal.TipoLocal.TipoLocal;
 import sv.edu.ues.fia.gade.model.AccesoUsuario;
 import sv.edu.ues.fia.gade.model.OpcionCrud;
 import sv.edu.ues.fia.gade.model.Usuario;
@@ -52,6 +57,52 @@ public class controlDB extends SQLiteOpenHelper {
             //Escuela
             db.execSQL("CREATE TABLE ESCUELA (idEscuela INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL);");
             //End of Escuela
+
+            //Local
+            //db.execSQL("CREATE TABLE LOCAL (IDLOCAL INTEGER PRIMARY KEY AUTOINCREMENT, CODIGOLOCAL TEXT NOT NULL UNIQUE,CAPACIDAD INTEGER, DESCRIPCION TEXT, TIENESILLA TEXT, TIENESONIDO TEXT, TIPOPIZARRA TEXT, TIPOLOCAL INTEGER)");
+            //End of Local
+
+            //Tipo Local
+            //db.execSQL("CREATE TABLE TIPOLOCAL (IDTIPOLOCAL INTEGER PRIMARY KEY AUTOINCREMENT, NOMTIPO TEXT NOT NULL UNIQUE)");
+            //End of Tipo Local
+
+            //TIPOASIGNATURA
+            db.execSQL("CREATE TABLE TipoAsignatura (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT UNIQUE NOT NULL)");
+            db.execSQL("INSERT INTO TipoAsignatura values(1,'Calculo')");
+            db.execSQL("INSERT INTO TipoAsignatura values(2,'Económica')");
+            db.execSQL("INSERT INTO TipoAsignatura values(3,'Legislativa')");
+            db.execSQL("INSERT INTO TipoAsignatura values(4,'Industrial')");
+            db.execSQL("INSERT INTO TipoAsignatura values(5,'Programación')");
+            db.execSQL("INSERT INTO TipoAsignatura values(6,'Humanística')");
+            //ASIGNATURA
+            db.execSQL("CREATE TABLE Asignatura (IDASIGNATURA INTEGER PRIMARY KEY AUTOINCREMENT, CODIGO TEXT NOT NULL UNIQUE, TIPOASIGNATURA INTEGER,NOMDOCENTE TEXT, UNIDADESVALORATIVAS INTEGER, NIVELCICLO INTEGER)");
+            db.execSQL("INSERT INTO Asignatura values(1,'MAT-115',1,'Mejia',4,1)");
+            db.execSQL("INSERT INTO Asignatura values(2,'IAI-115',5,'Jennifer',4,1)");
+            db.execSQL("INSERT INTO Asignatura values(3,'LPR-115',6,'Lic. Medrano',4,10)");
+
+            //PRIORIDAD
+            db.execSQL("CREATE TABLE Prioridad (IDPRIORIDAD INTEGER PRIMARY KEY AUTOINCREMENT, ETIQUETA TEXT NOT NULL UNIQUE)");
+            db.execSQL("INSERT INTO Prioridad values(1,'Demandada')");
+            db.execSQL("INSERT INTO Prioridad values(2,'Poca demanda')");
+            db.execSQL("INSERT INTO Prioridad values(3,'Sin mucha demanda')");
+            //GRUPO
+            db.execSQL("CREATE TABLE Grupo (IDGRUPO INTEGER PRIMARY KEY AUTOINCREMENT, TIPOGRUPO TEXT NOT NULL UNIQUE, ASIGNATURA INTEGER, INSCRITOS INTEGER, CUPO INTEGER)");
+            db.execSQL("INSERT INTO Grupo values(1,'Teorico',1,20,20)");
+            db.execSQL("INSERT INTO Grupo values(2,'Discusion',1,20,20)");
+            db.execSQL("INSERT INTO Grupo values(3,'Laboratorio',1,20,20)");
+
+            //TIPOLOCAL
+            db.execSQL("CREATE TABLE TipoLocal (IDTIPOLOCAL INTEGER PRIMARY KEY AUTOINCREMENT, NOMTIPO TEXT NOT NULL UNIQUE)");
+            db.execSQL("INSERT INTO TipoLocal values(1,'Salon Normal')");
+            db.execSQL("INSERT INTO TipoLocal values(2,'Laboratorio UCB')");
+            db.execSQL("INSERT INTO TipoLocal values(3,'Laboratorio computo')");
+            db.execSQL("INSERT INTO TipoLocal values(4,'Infocentro')");
+            db.execSQL("INSERT INTO TipoLocal values(5,'Auditorio')");
+
+            //LOCALES
+            db.execSQL("CREATE TABLE Local (IDLOCAL INTEGER PRIMARY KEY AUTOINCREMENT, CODIGOLOCAL TEXT NOT NULL UNIQUE,CAPACIDAD INTEGER, DESCRIPCION TEXT, TIENESILLA TEXT, TIENESONIDO TEXT, TIPOPIZARRA TEXT, TIPOLOCAL INTEGER)");
+            db.execSQL("INSERT INTO Local values(1,'B-11',60,'Descripcion','SI','NO','PLUMON',1)");
+            db.execSQL("INSERT INTO Local values(2,'B-21',40,'Descripcion','NO','SI','TIZA',1)");
         }catch (Exception e){
 
         }
@@ -68,6 +119,7 @@ public class controlDB extends SQLiteOpenHelper {
             db.execSQL("DROP TABLE IF EXISTS DOCENTE");
             db.execSQL("DROP TABLE IF EXISTS HORARIO");
             db.execSQL("DROP TABLE IF EXISTS ESCUELA");
+            db.execSQL("DROP TABLE IF EXISTS LOCAL");
         }catch (Exception e){
 
         }
@@ -492,6 +544,209 @@ public class controlDB extends SQLiteOpenHelper {
         return regEliminado;
     }
     //End of Escuela
+
+    //PARA INSERTAR Asignatura
+    public boolean insertData(String codigo,String name, String unidades, String nivel,String tipoAsignatura){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentvalues = new ContentValues();
+        contentvalues.put("CODIGO", codigo);
+        contentvalues.put("TIPOASIGNATURA", Integer.parseInt(tipoAsignatura));
+        contentvalues.put("NOMDOCENTE", name);
+        contentvalues.put("UNIDADESVALORATIVAS", Integer.parseInt(unidades));
+        contentvalues.put("NIVELCICLO", Integer.parseInt(nivel));
+
+        long result = db.insert("ASIGNATURA",null,contentvalues);
+        db.close();
+
+        //To check whether Data is Inserted in DataBase
+        if(result==-1){
+            return false;
+        }else{
+            return true;
+        }
+
+    } //Fin INSERTAR
+
+    //PARA INSERTAR LOCAL
+    public boolean insertDataLocal(String codigo,String capacidad, String descripcion, String silla,String sonido, String pizarra,String tipoLocal){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentvalues = new ContentValues();
+        contentvalues.put("CODIGOLOCAL", codigo);
+        contentvalues.put("CAPACIDAD", Integer.parseInt(capacidad));
+        contentvalues.put("DESCRIPCION", descripcion);
+        contentvalues.put("TIENESILLA", silla);
+        contentvalues.put("TIENESONIDO", sonido);
+        contentvalues.put("TIPOPIZARRA", pizarra);
+        contentvalues.put("TIPOLOCAL",tipoLocal);
+
+        long result = db.insert("LOCAL",null,contentvalues);
+        db.close();
+
+        //To check whether Data is Inserted in DataBase
+        if(result==-1){
+            return false;
+        }else{
+            return true;
+        }
+
+    } //Fin INSERTAR
+
+    //PARA ACTUALIZAR Asignatura
+    public boolean updateData(String id, String codigo,String name, String unidades, String nivel,String tipoAsignatura){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentvalues = new ContentValues();
+        contentvalues.put("CODIGO", codigo);
+        contentvalues.put("TIPOASIGNATURA", Integer.parseInt(tipoAsignatura));
+        contentvalues.put("NOMDOCENTE", name);
+        contentvalues.put("UNIDADESVALORATIVAS", Integer.parseInt(unidades));
+        contentvalues.put("NIVELCICLO", Integer.parseInt(nivel));
+        int variable = db.update("ASIGNATURA",contentvalues,"IDASIGNATURA=?",new String[]{id});
+        if(variable>0){
+            return true;
+        }else{
+            return false;
+        }
+
+    }//FIN ACTUALIZAR
+
+    //PARA ACTUALIZAR LOCAL
+    public boolean updateDataLocal(String id, String codigo,String capacidad, String descripcion, String silla,String sonido, String pizarra,String tipoLocal){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentvalues = new ContentValues();
+        contentvalues.put("CODIGOLOCAL", codigo);
+        contentvalues.put("CAPACIDAD", Integer.parseInt(capacidad));
+        contentvalues.put("DESCRIPCION", descripcion);
+        contentvalues.put("TIENESILLA", silla);
+        contentvalues.put("TIENESONIDO", sonido);
+        contentvalues.put("TIPOPIZARRA", pizarra);
+        contentvalues.put("TIPOLOCAL",tipoLocal);
+        int variable = db.update("LOCAL",contentvalues,"IDLOCAL=?",new String[]{id});
+        if(variable>0){
+            return true;
+        }else{
+            return false;
+        }
+
+    }//FIN ACTUALIZAR
+
+    //PARA ELIMINAR Asignatura
+    public Integer deleteData(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int variable = db.delete("ASIGNATURA","IDASIGNATURA=?",new String[]{id});
+        return variable;
+    }
+    //PARA ELIMINAR LOCAL
+    public Integer deleteDataLocal(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int variable = db.delete("LOCAL","IDLOCAL=?",new String[]{id});
+        return variable;
+    }
+
+    //PARA Consultar Tipo Asignatura
+    public ArrayList<TipoAsignatura> getTipoAsignaturas(){
+        ArrayList<TipoAsignatura> locales = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            Cursor c = db.rawQuery("select * from TIPOASIGNATURA",null);
+            if (c!=null && c.getCount()>0){
+                while (c.moveToNext()){
+                    locales.add(new TipoAsignatura(c.getInt(0),c.getString(1)));
+                }
+            }
+            c.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        db.close();
+        return locales;
+    }
+
+    //PARA Consultar Prioridad
+    public ArrayList<Prioridad> getPrioridades(){
+        ArrayList<Prioridad> locales = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            Cursor c = db.rawQuery("select * from PRIORIDAD",null);
+            if (c!=null && c.getCount()>0){
+                while (c.moveToNext()){
+                    locales.add(new Prioridad(c.getInt(0),c.getString(1)));
+                }
+            }
+            c.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        db.close();
+        return locales;
+    }
+
+    //PARA Consultar TipoLocal
+    public ArrayList<TipoLocal> getTipoLocales(){
+        ArrayList<TipoLocal> locales = new ArrayList<TipoLocal>();
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            Cursor c = db.rawQuery("select * from TIPOLOCAL",null);
+            if (c!=null && c.getCount()>0){
+                while (c.moveToNext()){
+                    locales.add(new TipoLocal(c.getInt(0),c.getString(1)));
+                }
+            }
+            c.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        db.close();
+        return locales;
+    }//fin consultaTipoLocal
+
+
+
+    public ArrayList<Local> getLocales(){
+        ArrayList<Local> locales = new ArrayList<Local>();
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            Cursor c = db.rawQuery("select * from LOCAL",null);
+            if (c!=null && c.getCount()>0){
+                while (c.moveToNext()){
+                    locales.add(new Local(c.getInt(0),c.getString(1),c.getInt(2),c.getString(3),c.getString(4),c.getString(5),c.getString(6)));
+                }
+            }
+            c.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        db.close();
+        return locales;
+    }
+
+    public ArrayList<Asignatura> getAsignaturas(){
+        ArrayList<Asignatura> locales = new ArrayList<Asignatura>();
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            Cursor c = db.rawQuery("select * from ASIGNATURA",null);
+            if (c!=null && c.getCount()>0){
+                while (c.moveToNext()){
+                    locales.add(new Asignatura(c.getInt(0),c.getString(1),c.getString(2),c.getInt(3),c.getInt(4)));
+                }
+            }
+            c.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        db.close();
+        return locales;
+    }
+    public Cursor buscar(String nombre, String campo, String texto){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery("Select * from "+nombre+" where "+texto+"='"+campo+"'",null);
+        return cursor;
+    }
+
+    public Cursor buscarTipo(String nombre, String campo, String texto){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery("Select * from "+nombre+" where "+texto+"="+campo,null);
+        return cursor;
+    }
 }
 
 

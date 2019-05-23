@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".UsuarioNormal.Local.LocalInsertarActivity">
+
+    <TextView
+        android:id="@+id/text_view_id"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Codigo de local" />
+    <EditText
+        android:id="@+id/idCodigo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLength="20"
+        android:hint="Codigo"/>
+    <TextView
+        android:id="@+id/text_view_id2"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Tipo de Local" />
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="50dp"
+        >
+
+    </Spinner>
+    <EditText
+        android:id="@+id/capacidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:maxLength="4"
+        android:hint="Capacidad de Alumnos"
+        />
+    <EditText
+        android:id="@+id/descripcion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Escriba una descripcion (opcional)"
+        android:maxLength="140"
+        />
+    <TextView
+        android:id="@+id/text_view_id5"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Tiene silla?" />
+    <EditText
+        android:id="@+id/silla"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLength="2"
+        android:hint="silla"
+        />
+    <TextView
+        android:id="@+id/text_view_id6"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Tiene sonido?" />
+    <EditText
+        android:id="@+id/sonido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLength="2"
+        android:hint="sonido"
+        />
+    <TextView
+        android:id="@+id/text_view_id7"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Tipo de Pizarra" />
+    <EditText
+        android:id="@+id/pizarra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="pizarra"
+        android:maxLength="6"
+        />
+    <LinearLayout
+        android:id="@+id/menuLinearLayout"
+        android:layout_below="@+id/midTableLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3">
+        <Button
+            android:id="@+id/btnGuardar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Guardar"/>
+        <Button
+            android:id="@+id/btnLimpiar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Limpiar"/>
+        <Button
+            android:id="@+id/btnCancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancelar"/></LinearLayout>
+</LinearLayout>
