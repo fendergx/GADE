@@ -1,11 +1,14 @@
 package sv.edu.ues.fia.gade.UsuarioNormal.Docente;
 
+import sv.edu.ues.fia.gade.UsuarioNormal.Escuela.Escuela;
+
 /**
  * Created by MauryOG on 10/5/2018.
  */
 
 public class Docente {
     private  int idDocente;
+    private Escuela escuela;
     private  int idEscuela;
     private  String nombreDoc;
 
@@ -26,6 +29,14 @@ public class Docente {
 
     public void setIdDocente(int idDocente) {
         this.idDocente = idDocente;
+    }
+
+    public Escuela getEscuela() {
+        return escuela;
+    }
+
+    public void setEscuela(Escuela escuela) {
+        this.escuela = escuela;
     }
 
     public int getIdEscuela() {

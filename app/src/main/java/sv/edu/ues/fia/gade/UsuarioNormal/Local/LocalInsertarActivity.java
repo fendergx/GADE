@@ -50,7 +50,7 @@ public class LocalInsertarActivity extends AppCompatActivity {
         for(TipoLocal l : tipoLocalArrayList){
             Lista_para_tipo.add(l.getNombre());
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, Lista_para_tipo);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Lista_para_tipo);
         foca.setAdapter(adapter);
         btnClick.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,10 +76,8 @@ public class LocalInsertarActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
     }
+
     private void ClickMe(){
         String cod = codigo.getText().toString().trim();
         String capac = capacidad.getText().toString().trim();

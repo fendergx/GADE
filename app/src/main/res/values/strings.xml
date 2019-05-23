@@ -26,6 +26,7 @@
     <string name="consultar">consultar</string>
     <!-- end of Consultar -->
     <!-- Insertar -->
+    <string name="Escuela">Escuela:</string>
     <string name="opciones">opciones</string>
     <string name="insertar">insertar</string>
     <!-- End of Insertar -->
@@ -49,4 +50,13 @@
     <!-- Escuela Strings -->
     <string name="nombreEscuela">nombre</string>
     <!-- End of Escuela Strings -->
+
+    <!-- Tipo Actividad Strings -->
+    <string name="tipoactividadInsertar">Insertar Tipo Actividad</string>
+    <string name="tipoactividadEliminar">Eliminar Tipo Actividad</string>
+    <string name="tipoactividadActualizar">Actualizar Tipo Actividad</string>
+    <string name="tipoactividadConsultar">Consultar Tipo Actividad</string>
+    <string name="idTipoActividad">Id Tipo Actividad</string>
+    <string name="nomTipoActividad">nomTipoActividad</string>
+    <!-- End of Tipo Actividad Strings -->
 </resources>

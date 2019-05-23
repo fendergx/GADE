@@ -16,7 +16,7 @@ public class DocenteConsultarActivity extends Activity
     EditText editIdDoc;
     EditText editIdEscuela;
     EditText editNomDoc;
-    /** Called when the activity is first created. */
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -31,7 +31,6 @@ public class DocenteConsultarActivity extends Activity
 
     public void consultarDocente(View v)
     {
-
         //helper.abrir();
         Docente docente = helper.consultarDocente(editIdDoc.getText().toString());
         helper.close();
@@ -40,7 +39,7 @@ public class DocenteConsultarActivity extends Activity
             Toast.makeText(this, "Docente Con Identificador " + editIdDoc.getText().toString() + " no encontrado", Toast.LENGTH_LONG).show();
         else {
             editNomDoc.setText(docente.getNombreDoc());
-            editIdEscuela.setText(String.valueOf(docente.getIdEscuela()));
+            editIdEscuela.setText(docente.getEscuela().getNombre());
         }
     }
 

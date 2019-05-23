@@ -27,4 +27,8 @@ public class Escuela {
     public String getNombre() {
         return nombre;
     }
+
+    public String toString(){
+        return nombre;
+    }
 }

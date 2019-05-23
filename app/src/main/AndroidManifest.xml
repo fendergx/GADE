@@ -9,7 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UsuarioNormal.Prioridad.PrioridadConsultarActivity"></activity>
+        <activity android:name=".UsuarioNormal.TipoActividad.TipoActividadConsultarActivity"></activity>
+        <activity android:name=".UsuarioNormal.TipoActividad.TipoActividadActualizarActivity" />
+        <activity android:name=".UsuarioNormal.TipoActividad.TipoActividadEliminarActivity" />
+        <activity android:name=".UsuarioNormal.TipoActividad.TipoActividadInsertarActivity" />
+        <activity android:name=".UsuarioNormal.TipoActividad.TipoActividadGestionarActivity" />
+        <activity android:name=".UsuarioNormal.Prioridad.PrioridadConsultarActivity" />
         <activity android:name=".UsuarioNormal.TipoLocal.TipoLocalConsultarActivity" />
         <activity android:name=".UsuarioNormal.TipoAsignatura.TipoAsignaturaConsultarActivity" />
         <activity android:name=".UsuarioNormal.Asignatura.AsignaturaActualizarActivity" />
