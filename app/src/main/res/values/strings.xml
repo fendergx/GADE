@@ -71,4 +71,13 @@
     <string name="tipoActividad">tipoActividad</string>
     <string name="idActividad">idActividad</string>
     <!-- End of Actividad -->
+
+    <!-- Carrera -->
+    <string name="carreraInsertar">Insertar Carrera</string>
+    <string name="carreraEliminar">Eliminar Carrera</string>
+    <string name="carreraActualizar">Actualizar Carrera</string>
+    <string name="carreraConsultar">Consultar Carrera</string>
+    <string name="idCarrera">idCarrera</string>
+    <string name="nomCarrera">nomCarrera</string>
+    <!-- End of Carrera -->
 </resources>

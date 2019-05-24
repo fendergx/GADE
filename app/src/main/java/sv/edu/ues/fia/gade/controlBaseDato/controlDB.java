@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import sv.edu.ues.fia.gade.UsuarioNormal.Actividad.Actividad;
 import sv.edu.ues.fia.gade.UsuarioNormal.Asignatura.Asignatura;
+import sv.edu.ues.fia.gade.UsuarioNormal.Carrera.Carrera;
 import sv.edu.ues.fia.gade.UsuarioNormal.Pensum.Pensum;
 import sv.edu.ues.fia.gade.UsuarioNormal.TipoActividad.TipoActividad;
 import sv.edu.ues.fia.gade.UsuarioNormal.TipoAsignatura.TipoAsignatura;
@@ -72,6 +73,10 @@ public class controlDB extends SQLiteOpenHelper {
             //Tipo Actividad
             db.execSQL("create table TIPOACTIVIDAD(IDTIPOACTIVIDAD INTEGER PRIMARY KEY AUTOINCREMENT,NOMTIPOACTIVIDAD TEXT not null)");
             //End of Tipo Actividad
+
+            //Carrera
+            db.execSQL("create table CARRERA(IDESCUELA INTEGER not null PRIMARY KEY, IDCARRERA INTEGER not null, NOMCARRERA TEXT not null)");
+            //End of Carrera
 
             //Local
             //db.execSQL("CREATE TABLE LOCAL (IDLOCAL INTEGER PRIMARY KEY AUTOINCREMENT, CODIGOLOCAL TEXT NOT NULL UNIQUE,CAPACIDAD INTEGER, DESCRIPCION TEXT, TIENESILLA TEXT, TIENESONIDO TEXT, TIPOPIZARRA TEXT, TIPOLOCAL INTEGER)");
@@ -140,6 +145,7 @@ public class controlDB extends SQLiteOpenHelper {
             db.execSQL("DROP TABLE IF EXISTS PRIORIDAD");
             db.execSQL("DROP TABLE IF EXISTS PENSUM");
             db.execSQL("DROP TABLE IF EXISTS ACTIVIDAD");
+            db.execSQL("DROP TABLE IF EXISTS CARRERA");
         }catch (Exception e){
 
         }
@@ -293,6 +299,18 @@ public class controlDB extends SQLiteOpenHelper {
             insertOpcion(36,"Actividad", 3);
 
             //End of Opcion
+
+            //Carrera
+            ArrayList<Carrera> carreras = new ArrayList<>();
+
+            carreras.add(new Carrera(1, 5,"Civil"));
+            carreras.add(new Carrera(3, 5,"Quimica"));
+
+            for(Carrera car: carreras)
+            {
+                insertCarrera(car);
+            }
+            //End of Carrera
 
             return true;
         } catch (Exception e) {
@@ -868,6 +886,94 @@ public class controlDB extends SQLiteOpenHelper {
         }
     }
     //End of Actividad
+
+    //Carrera
+    private static final String[]camposCarrera = new String [] {"idescuela", "idcarrera", "nomcarrera"};
+
+    public String insertCarrera(Carrera carrera)
+    {
+        String regInsertado = "Carrera: ";
+        long contador = 0;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("IDESCUELA",carrera.getIdEscuela());
+        contentValues.put("IDCARRERA",carrera.getIdCarrera());
+        contentValues.put("NOMCARRERA",carrera.getNomCarrera());
+        contador = db.insert("CARRERA", null,contentValues);
+        if(contador == -1 || contador == 0){
+            regInsertado = "Ya existe la carrera." + carrera.getIdCarrera();
+        }else{
+            regInsertado = regInsertado + contador;
+        }
+        return regInsertado;
+    }
+
+    public Cursor getDataCarrera(int idCarrera) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("Select * from CARRERA WHERE IDCARRERA= "+idCarrera,null);
+        return cursor;
+    }
+
+
+    public String eliminarCarrera(Carrera carrera)
+    {
+        String regEliminado = "Se elimino la carrera #";
+        SQLiteDatabase db = this.getWritableDatabase();
+        String idCarrera = String.valueOf(carrera.getIdCarrera());
+        String [] id = {idCarrera};
+        int res = db.delete("CARRERA", "IDCARRERA = ?",id);
+
+        if(res>0){
+            regEliminado += idCarrera;
+        }else{
+            regEliminado = "Este registro no existe";
+        }
+        return regEliminado;
+    }
+
+    public String actualizarCarrera(Carrera carrera)
+    {
+        String regAc = "Registro Actualizado #";
+        String idCarrera = String.valueOf(carrera.getIdCarrera());
+        String[] id = {idCarrera};
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("idescuela",carrera.getIdEscuela());
+        cv.put("idcarrera",carrera.getIdCarrera());
+        cv.put("nomcarrera",carrera.getNomCarrera());
+        int resultado = db.update("carrera",cv,"idcarrera = ?",id);
+
+        if(resultado>0){
+            regAc += idCarrera;
+        }else{
+            regAc = "No se encuentra registro Carrera para ser actualizado";
+        }
+        return regAc;
+    }
+
+
+    public  Carrera consultarCarrera(String car) //
+    {
+        String [] idCar = {car};
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query("carrera", camposCarrera, "idcarrera = ?", idCar, null, null, null);
+        if (cursor.moveToFirst())
+        {
+            Carrera carrera = new Carrera();
+
+            carrera.setIdEscuela(cursor.getInt(0));
+            carrera.setIdCarrera(cursor.getInt(1));
+            carrera.setNomCarrera(cursor.getString(2));
+
+            return carrera;
+        }
+        else {
+            return null;
+        }
+    }
+    //End of Carrera
 
     //PARA INSERTAR Asignatura
     public boolean insertData(String codigo,String name, String unidades, String nivel,String tipoAsignatura){
