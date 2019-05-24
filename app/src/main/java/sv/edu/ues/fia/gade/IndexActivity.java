@@ -21,7 +21,7 @@ public class IndexActivity extends ListActivity {
             "Escuela",
             "Local",
             "Asignatura",
-            "Prioridad"
+            "Prioridad",
     };
 
     String[] valores={

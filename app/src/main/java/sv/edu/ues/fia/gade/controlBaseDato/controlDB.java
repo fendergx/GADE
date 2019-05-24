@@ -71,11 +71,11 @@ public class controlDB extends SQLiteOpenHelper {
             //End of Actividad
 
             //Tipo Actividad
-            db.execSQL("create table TIPOACTIVIDAD(IDTIPOACTIVIDAD INTEGER PRIMARY KEY AUTOINCREMENT,NOMTIPOACTIVIDAD TEXT not null)");
+            db.execSQL("create table TIPOACTIVIDAD(IDTIPOACTIVIDAD INTEGER PRIMARY KEY AUTOINCREMENT, NOMTIPOACTIVIDAD TEXT not null)");
             //End of Tipo Actividad
 
             //Carrera
-            db.execSQL("create table CARRERA(IDESCUELA INTEGER not null PRIMARY KEY, IDCARRERA INTEGER not null, NOMCARRERA TEXT not null)");
+            db.execSQL("create table CARRERA(IDESCUELA INTEGER not null, IDCARRERA INTEGER not null PRIMARY KEY AUTOINCREMENT, NOMCARRERA TEXT not null)");
             //End of Carrera
 
             //Local
@@ -232,7 +232,7 @@ public class controlDB extends SQLiteOpenHelper {
             //End of TipoActividad
 
             //Acceso
-            for(int a = 1; a<36; a++) {
+            for(int a = 1; a<40; a++) {
                 insertAcceso("Cesar", a);
             }
 
@@ -245,6 +245,7 @@ public class controlDB extends SQLiteOpenHelper {
             insertAcceso("Mauricio", 1);
             insertAcceso("Mauricio", 5);
             insertAcceso("Mauricio", 33);
+            insertAcceso("Mauricio", 37);
 
             insertAcceso("Doris", 17);
 
@@ -298,6 +299,10 @@ public class controlDB extends SQLiteOpenHelper {
             insertOpcion(35,"Actividad", 2);
             insertOpcion(36,"Actividad", 3);
 
+            insertOpcion(37,"Carrera", 0);
+            insertOpcion(38,"Carrera", 1);
+            insertOpcion(39,"Carrera", 2);
+            insertOpcion(40,"Carrera", 3);
             //End of Opcion
 
             //Carrera
@@ -900,7 +905,7 @@ public class controlDB extends SQLiteOpenHelper {
         contentValues.put("IDESCUELA",carrera.getIdEscuela());
         contentValues.put("IDCARRERA",carrera.getIdCarrera());
         contentValues.put("NOMCARRERA",carrera.getNomCarrera());
-        contador = db.insert("CARRERA", null,contentValues);
+        contador = db.insert("CARRERA", null, contentValues);
         if(contador == -1 || contador == 0){
             regInsertado = "Ya existe la carrera." + carrera.getIdCarrera();
         }else{
@@ -1189,7 +1194,7 @@ public class controlDB extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         //contentValues.put("IDTIPOACTIVIDAD",tipoActvidad.getIdTipoActividad());
         contentValues.put("NOMTIPOACTIVIDAD", tipoActvidad.getNomTipoActividad());
-        contador = db.insert("TIPOACTIVIDAD",null,contentValues);
+        contador = db.insert("TIPOACTIVIDAD",null, contentValues);
         if(contador == -1 || contador == 0){
             regInsertado = "Ya existe el tipo de actividad." + tipoActvidad.getIdTipoActividad();
         }else{
