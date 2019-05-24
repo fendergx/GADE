@@ -38,7 +38,7 @@ public class controlDB extends SQLiteOpenHelper {
         try {
             //Usuario, Control, Acceso
             db.execSQL("create table USUARIO  (USERNAME TEXT primary key,CLAVE TEXT not null, TIPO INTEGER not null )");
-            db.execSQL("create table OPCION  (ID INTEGER primary key, NOMBRECRUD TEXT, NUMCRUD INTEGER not null )");
+            db.execSQL("create table OPCION  (ID INTEGER primary key, NOMBRECRUD TEXT not null, NUMCRUD INTEGER not null )");
             db.execSQL("create table ACCESO  (USERNAME TEXT not null, ID INTEGER not null, primary key (USERNAME, ID))");
             //End of Usuario, Control, Acceso
 
@@ -140,7 +140,7 @@ public class controlDB extends SQLiteOpenHelper {
             ArrayList<OpcionCrud> option = new ArrayList<>();
             ArrayList<AccesoUsuario> accesoUsuarios = new ArrayList<>();
 
-            option.add(new OpcionCrud("CREAR USUARIO", 1, 1));
+            /*option.add(new OpcionCrud("CREAR USUARIO", 1, 1));
             option.add(new OpcionCrud("EDITAR USUARIO", 2, 2));
             option.add(new OpcionCrud("ELIMINAR USUARIO", 3, 3));
             option.add(new OpcionCrud("SELECCIONAR USUARIO", 4, 4));
@@ -153,28 +153,28 @@ public class controlDB extends SQLiteOpenHelper {
             option.add(new OpcionCrud("CREAR RESERVACION", 9, 1));
             option.add(new OpcionCrud("EDITAR RESERVACION", 10, 2));
             option.add(new OpcionCrud("ELIMINAR RESERVACION", 11, 3));
-            option.add(new OpcionCrud("SELECCIONAR RESERVACION", 12, 4));
+            option.add(new OpcionCrud("SELECCIONAR RESERVACION", 12, 4));*/
 
             ArrayList<Usuario> users = new ArrayList<>();
 
-            users.add(new Usuario("Ever", "sio115", 2));
-            users.add(new Usuario("Doris", "pdm115", 2));
-            users.add(new Usuario("Carlos", "sic115", 2));
-            users.add(new Usuario("Miguel", "anf115", 1));
-            users.add(new Usuario("Mauricio", "tpi115", 2));
+            users.add(new Usuario("Ever", "aaa115", 2));
+            users.add(new Usuario("Doris", "aaa115", 2));
+            users.add(new Usuario("Carlos", "aaa115", 2));
+            users.add(new Usuario("Miguel", "aaa115", 1));
+            users.add(new Usuario("Mauricio", "aaa115", 2));
             users.add(new Usuario("Cesar", "cos115", 1));
 
-            int i = 1;
+            /*int i = 1;
             for (OpcionCrud op : option) {
                 insertOpcion(op.getIdOpcion(), op.getNombreCRUD(), op.getNumCRUD());
                 for (Usuario u : users) {
                     if (op.getNumCRUD() == 4) {
-                        insertAcceso(u.getUsername(), op.getIdOpcion());
+                        //insertAcceso(u.getUsername(), op.getIdOpcion());
                     } else if (u.getTipo() == 2) {
-                        insertAcceso(u.getUsername(), op.getIdOpcion());
+                        //insertAcceso(u.getUsername(), op.getIdOpcion());
                     }
                 }
-            }
+            }*/
 
             for (Usuario u : users) {
                 insertUser(u.getUsername(), u.getClave(), u.getTipo());
@@ -212,6 +212,63 @@ public class controlDB extends SQLiteOpenHelper {
                 insertTipoActividad(ta);
             }
             //End of TipoActividad
+
+            //Acceso
+            for(int a = 1; a<29; a++) {
+                insertAcceso("Cesar", a);
+            }
+
+            insertAcceso("Miguel", 9);
+            insertAcceso("Miguel", 13);
+
+            insertAcceso("Ever", 21);
+
+            insertAcceso("Mauricio", 1);
+            insertAcceso("Mauricio", 5);
+
+            insertAcceso("Doris", 17);
+
+            //insertAcceso("Carlos", 6);
+            //insertAcceso("Carlos", 7);
+            //End of Acceso
+
+            //Opcion
+            insertOpcion(1,"TipoActividad", 0);
+            insertOpcion(2,"TipoActividad", 1);
+            insertOpcion(3,"TipoActividad", 2);
+            insertOpcion(4,"TipoActividad", 3);
+
+            insertOpcion(5,"Docente", 0);
+            insertOpcion(6,"Docente", 1);
+            insertOpcion(7,"Docente", 2);
+            insertOpcion(8,"Docente", 3);
+
+            insertOpcion(9,"Horario", 0);
+            insertOpcion(10,"Horario", 1);
+            insertOpcion(11,"Horario", 2);
+            insertOpcion(12,"Horario", 3);
+
+            insertOpcion(13,"Escuela", 0);
+            insertOpcion(14,"Escuela", 1);
+            insertOpcion(15,"Escuela", 2);
+            insertOpcion(16,"Escuela", 3);
+
+            insertOpcion(17,"Local", 0);
+            insertOpcion(18,"Local", 1);
+            insertOpcion(19,"Local", 2);
+            insertOpcion(20,"Local", 3);
+
+            insertOpcion(21,"Asignatura", 0);
+            insertOpcion(22,"Asignatura", 1);
+            insertOpcion(23,"Asignatura", 2);
+            insertOpcion(24,"Asignatura", 3);
+
+            insertOpcion(25,"Prioridad", 0);
+            insertOpcion(26,"Prioridad", 1);
+            insertOpcion(27,"Prioridad", 2);
+            insertOpcion(28,"Prioridad", 3);
+
+            //End of Opcion
 
             return true;
         } catch (Exception e) {
@@ -257,6 +314,24 @@ public class controlDB extends SQLiteOpenHelper {
             retorno=true;
         }
         return retorno;
+    }
+
+    public ArrayList<AccesoUsuario> getAccesos(String user){
+        ArrayList<AccesoUsuario> accesos = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            Cursor c = db.rawQuery("SELECT o.ID, o.NOMBRECRUD FROM ACCESO a, OPCION o WHERE a.ID = o.ID AND a.USERNAME = '" + user +"' GROUP BY NOMBRECRUD;",null);
+            if (c!=null && c.getCount()>0){
+                while (c.moveToNext()){
+                    accesos.add(new AccesoUsuario(c.getInt(0), c.getString(1)));
+                }
+            }
+            c.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        db.close();
+        return accesos;
     }
     //End of Acceso
 

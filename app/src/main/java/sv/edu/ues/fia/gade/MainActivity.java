@@ -53,21 +53,12 @@ public class MainActivity extends AppCompatActivity {
                 int x = us.compareToIgnoreCase(nombre);
                 int y = pas.compareTo(contra);
                 if (x==0 && y ==0){
-                    if(tip==1){
-                        Intent i = new Intent(this,IndexActivity.class);
-                        i.putExtra("user",us);
-                        i.putExtra("passwor",pas);
-                        i.putExtra("tipo",tip);
-                        startActivity(i);
-                        finish();
-                    }else if(tip==2){
-                        Intent i = new Intent(this,AdminActivity.class);
-                        i.putExtra("user",us);
-                        i.putExtra("passwor",pas);
-                        i.putExtra("tipo",tip);
-                        startActivity(i);
-                        finish();
-                    }
+                    Intent i = new Intent(this, IndexActivity.class);
+                    i.putExtra("user", us);
+                    i.putExtra("passwor", pas);
+                    i.putExtra("tipo", tip);
+                    startActivity(i);
+                    finish();
                 }else {
                     Toast.makeText(this,"Datos erroneos no hay usuarios con esas descripciones",Toast.LENGTH_SHORT).show();
                 }
