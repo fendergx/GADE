@@ -7,17 +7,36 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
+import sv.edu.ues.fia.gade.controlBaseDato.controlDB;
+
 public class EscuelaGestionarActivity extends ListActivity {
 
-    String[] menu = {"Insertar Escuela", "Eliminar Escuela", "Actualizar Escuela", "Consultar Escuela"};
-    String[] activities = {"EscuelaInsertarActivity", "EscuelaEliminarActivity", "EscuelaActualizarActivity", "EscuelaConsultarActivity"};
+    String[] menus = {"Consultar Escuela", "Insertar Escuela", "Eliminar Escuela", "Actualizar Escuela"};
+    String[] activities = {"EscuelaConsultarActivity", "EscuelaInsertarActivity", "EscuelaEliminarActivity", "EscuelaActualizarActivity"};
+
+    String[] menu, activiti;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.onCreate(savedInstanceState);
         ListView listView = getListView();
         //listView.setBackgroundColor(Color.rgb(200, 255, 155));
+
+        String user = getIntent().getExtras().getString("user");
+        controlDB helper = new controlDB(this);
+        ArrayList<Integer> opciones= helper.getOpciones(user, "Escuela");
+
+        menu = new String[opciones.size()];
+        activiti = new String[opciones.size()];
+        int i = 0;
+        for(int o : opciones){
+            menu[i] = menus[o];
+            activiti[i] = activities[o];
+            i++;
+        }
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menu);
         setListAdapter(adapter);
     }
@@ -27,7 +46,7 @@ public class EscuelaGestionarActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        String nombreValue = activities[position];
+        String nombreValue = activiti[position];
 
         //l.getChildAt(position).setBackgroundColor(Color.rgb(128, 128, 0));
 

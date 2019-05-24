@@ -7,29 +7,48 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import sv.edu.ues.fia.gade.R;
+import sv.edu.ues.fia.gade.controlBaseDato.controlDB;
 
 public class HorarioGestionarActivity extends ListActivity
 {
-    String[] menu = {"Insertar Horario", "Eliminar Horario", "Actualizar Horario", "Consultar Horario"};
-    String[] activities = {"HorarioInsertarActivity", "HorarioEliminarActivity", "HorarioActualizarActivity", "HorarioConsultarActivity"};
+    String[] menus = {"Consultar Horario", "Insertar Horario", "Eliminar Horario", "Actualizar Horario"};
+    String[] activities = {"HorarioConsultarActivity", "HorarioInsertarActivity", "HorarioEliminarActivity", "HorarioActualizarActivity"};
+
+    String[] menu;
+    String[] activiti;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ListView listView = getListView();
         //listView.setBackgroundColor(Color.rgb(200, 255, 155));
+
+        String user = getIntent().getExtras().getString("user");
+        controlDB helper = new controlDB(this);
+        ArrayList<Integer> opciones= helper.getOpciones(user, "Horario");
+
+        menu = new String[opciones.size()];
+        activiti = new String[opciones.size()];
+        int i = 0;
+        for(int o : opciones){
+            menu[i] = menus[o];
+            activiti[i] = activities[o];
+            i++;
+        }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menu);
         setListAdapter(adapter);
     }
-
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        String nombreValue = activities[position];
+        String nombreValue = activiti[position];
 
         //l.getChildAt(position).setBackgroundColor(Color.rgb(128, 128, 0));
 

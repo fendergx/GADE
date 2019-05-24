@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 
 import sv.edu.ues.fia.gade.UsuarioNormal.Asignatura.Asignatura;
+import sv.edu.ues.fia.gade.UsuarioNormal.Pensum.Pensum;
 import sv.edu.ues.fia.gade.UsuarioNormal.TipoActividad.TipoActividad;
 import sv.edu.ues.fia.gade.UsuarioNormal.TipoAsignatura.TipoAsignatura;
 import sv.edu.ues.fia.gade.UsuarioNormal.Escuela.Escuela;
@@ -58,6 +59,10 @@ public class controlDB extends SQLiteOpenHelper {
             //Escuela
             db.execSQL("CREATE TABLE ESCUELA (idEscuela INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL);");
             //End of Escuela
+
+            //Pensum
+            db.execSQL("CREATE TABLE PENSUM (idPensum INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL, anio INTEGER);");
+            //End of Pensum
 
             //Tipo Actividad
             db.execSQL("create table TIPOACTIVIDAD(IDTIPOACTIVIDAD INTEGER PRIMARY KEY AUTOINCREMENT,NOMTIPOACTIVIDAD TEXT not null)");
@@ -128,6 +133,7 @@ public class controlDB extends SQLiteOpenHelper {
             db.execSQL("DROP TABLE IF EXISTS TIPOACTIVIDAD");
             db.execSQL("DROP TABLE IF EXISTS GRUPO");
             db.execSQL("DROP TABLE IF EXISTS PRIORIDAD");
+            db.execSQL("DROP TABLE IF EXISTS PENSUM");
         }catch (Exception e){
 
         }
@@ -214,17 +220,19 @@ public class controlDB extends SQLiteOpenHelper {
             //End of TipoActividad
 
             //Acceso
-            for(int a = 1; a<29; a++) {
+            for(int a = 1; a<36; a++) {
                 insertAcceso("Cesar", a);
             }
 
             insertAcceso("Miguel", 9);
             insertAcceso("Miguel", 13);
+            insertAcceso("Miguel", 29);
 
             insertAcceso("Ever", 21);
 
             insertAcceso("Mauricio", 1);
             insertAcceso("Mauricio", 5);
+            insertAcceso("Mauricio", 33);
 
             insertAcceso("Doris", 17);
 
@@ -267,6 +275,16 @@ public class controlDB extends SQLiteOpenHelper {
             insertOpcion(26,"Prioridad", 1);
             insertOpcion(27,"Prioridad", 2);
             insertOpcion(28,"Prioridad", 3);
+
+            insertOpcion(29,"Pensum", 0);
+            insertOpcion(30,"Pensum", 1);
+            insertOpcion(31,"Pensum", 2);
+            insertOpcion(32,"Pensum", 3);
+
+            insertOpcion(33,"Carrera", 0);
+            insertOpcion(34,"Carrera", 1);
+            insertOpcion(35,"Carrera", 2);
+            insertOpcion(36,"Carrera", 3);
 
             //End of Opcion
 
@@ -332,6 +350,24 @@ public class controlDB extends SQLiteOpenHelper {
         }
         db.close();
         return accesos;
+    }
+
+    public ArrayList<Integer> getOpciones(String user, String menu){
+        ArrayList<Integer> opciones = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            Cursor c = db.rawQuery("SELECT o.NUMCRUD FROM ACCESO a, OPCION o WHERE a.ID = o.ID AND a.USERNAME = '" + user +"' AND o.NOMBRECRUD = '" + menu + "';",null);
+            if (c!=null && c.getCount()>0){
+                while (c.moveToNext()){
+                    opciones.add(c.getInt(0));
+                }
+            }
+            c.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        db.close();
+        return opciones;
     }
     //End of Acceso
 
@@ -654,6 +690,88 @@ public class controlDB extends SQLiteOpenHelper {
         return regEliminado;
     }
     //End of Escuela
+
+    //Pensum
+    private static final String [] camposPensum = new String[] {"idPensum", "nombre", "anio"};
+
+    public static final String pensumCol1 = "idPensum";
+    public static final String pensumCol2 = "nombre";
+    public static final String pensumCol3 = "anio";
+
+    public  String insertPensum(Pensum pensum) {
+        String regInsertado = "Escuela: ";
+        long contador = 0;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(pensumCol2, pensum.getNombre());
+        contentValues.put(pensumCol3, pensum.getAnio());
+
+        contador = db.insert("PENSUM",null, contentValues);
+
+        if(contador == -1 || contador == 0){
+            regInsertado = "Ya existe el pensum." + pensum.getIdPensum();
+        }else{
+            regInsertado = regInsertado + contador;
+        }
+        return regInsertado;
+    }
+
+    public Pensum consultarPensum(String idPensum) {
+        String [] id = {idPensum};
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query("PENSUM", camposPensum, "idPensum = ?", id, null, null, null);
+        if(cursor.moveToFirst())
+        {
+            Pensum pensum = new Pensum();
+            pensum.setNombre(cursor.getString(1));
+            pensum.setAnio(cursor.getInt(2));
+            return pensum;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public String actualizarPensum(Pensum pensum) {
+        String regAc = "Registro Actualizado #";
+        String idPensum = String.valueOf(pensum.getIdPensum());
+        String[] id = {idPensum};
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(pensumCol2, pensum.getNombre());
+        cv.put(pensumCol3, pensum.getAnio());
+
+        int resultado = db.update("PENSUM", cv,"idPensum = ?", id);
+
+        if(resultado>0){
+            regAc += idPensum;
+        } else {
+            regAc = "No se encuentra registro Pensum para ser actualizado";
+        }
+        return regAc;
+
+    }
+
+    public String eliminarPensum(Pensum pensum) {
+        String regEliminado = "Se elimino el Pensum #";
+        SQLiteDatabase db = this.getWritableDatabase();
+        String idPensum = String.valueOf(pensum.getIdPensum());
+        String [] id = {idPensum};
+        int res = db.delete("PENSUM", "idPensum = ?",id);
+
+        if(res>0){
+            regEliminado += idPensum;
+        } else {
+            regEliminado = "Este registro no existe";
+        }
+        return regEliminado;
+    }
+    //End of Pensum
 
     //PARA INSERTAR Asignatura
     public boolean insertData(String codigo,String name, String unidades, String nivel,String tipoAsignatura){

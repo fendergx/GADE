@@ -1,8 +1,7 @@
-package sv.edu.ues.fia.gade.UsuarioNormal.Docente;
+package sv.edu.ues.fia.gade.UsuarioNormal.Pensum;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -10,24 +9,24 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import sv.edu.ues.fia.gade.R;
 import sv.edu.ues.fia.gade.controlBaseDato.controlDB;
 
-public class DocenteGestionarActivity extends ListActivity
-{
-    String[] menus = {"Insertar Docente","Eliminar Docente","Actualizar Docente","Consultar Docente"};
-    String[] activities = {"DocenteInsertarActivity","DocenteEliminarActivity","DocenteActualizarActivity","DocenteConsultarActivity"};
+public class PensumGesionarActivity extends ListActivity {
 
-    String [] menu, activiti;
+    String[] menus = {"Consultar Pensum", "Insertar Pensum", "Eliminar Pensum", "Actualizar Pensum"};
+    String[] activities = {"PensumConsultarActivity", "PensumInsertarActivity", "PensumEliminarActivity", "PensumActualizarActivity"};
+
+    String[] menu, activiti;
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ListView listView = getListView();
         //listView.setBackgroundColor(Color.rgb(200, 255, 155));
 
         String user = getIntent().getExtras().getString("user");
         controlDB helper = new controlDB(this);
-        ArrayList<Integer> opciones= helper.getOpciones(user, "Docente");
+        ArrayList<Integer> opciones= helper.getOpciones(user, "Pensum");
 
         menu = new String[opciones.size()];
         activiti = new String[opciones.size()];
@@ -52,7 +51,7 @@ public class DocenteGestionarActivity extends ListActivity
         //l.getChildAt(position).setBackgroundColor(Color.rgb(128, 128, 0));
 
         try {
-            Class<?> clase = Class.forName("sv.edu.ues.fia.gade.UsuarioNormal.Docente." + nombreValue);
+            Class<?> clase = Class.forName("sv.edu.ues.fia.gade.UsuarioNormal.Pensum." + nombreValue);
             Intent inte = new Intent(this, clase);
             this.startActivity(inte);
         } catch (ClassNotFoundException e) {

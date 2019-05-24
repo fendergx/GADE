@@ -58,5 +58,7 @@
     <string name="tipoactividadConsultar">Consultar Tipo Actividad</string>
     <string name="idTipoActividad">Id Tipo Actividad</string>
     <string name="nomTipoActividad">nomTipoActividad</string>
+    <string name="anio">año</string>
+    <string name="idPensum">idPensum</string>
     <!-- End of Tipo Actividad Strings -->
 </resources>

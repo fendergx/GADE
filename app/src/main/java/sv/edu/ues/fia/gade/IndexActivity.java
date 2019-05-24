@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -34,12 +35,14 @@ public class IndexActivity extends ListActivity {
 
     String[] menu;
     String[] valor;
+    String us = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         String user = getIntent().getExtras().getString("user");
+        us = user;
         controlDB helper = new controlDB(this);
         ArrayList<AccesoUsuario> accesos = helper.getAccesos(user);
 
@@ -51,7 +54,6 @@ public class IndexActivity extends ListActivity {
             menu[i] = au.getIdUser();
             valor[i] = au.getIdUser() +"."+au.getIdUser()+"GestionarActivity";
             //valor[i] = valores[au.getIdOpcion()];
-            //Toast.makeText(this, au.getIdOpcion(),Toast.LENGTH_SHORT).show();
             i++;
         }
 
@@ -61,10 +63,12 @@ public class IndexActivity extends ListActivity {
     @Override
     protected  void  onListItemClick(ListView listView, View view, int position, long id)
     {
-        String nombreValue=valores[position];
+        String nombreValue=valor[position];
         try {
+            //Toast.makeText(this, nombreValue,Toast.LENGTH_SHORT).show();
             Class<?> clase = Class.forName("sv.edu.ues.fia.gade.UsuarioNormal." + nombreValue);
             Intent inte = new Intent(this,clase);
+            inte.putExtra("user", us);
             this.startActivity(inte);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
