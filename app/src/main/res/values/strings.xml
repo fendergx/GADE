@@ -61,4 +61,14 @@
     <string name="anio">año</string>
     <string name="idPensum">idPensum</string>
     <!-- End of Tipo Actividad Strings -->
+
+    <!-- Actividad -->
+    <string name="actividadInsertar">Insertar Actividad</string>
+    <string name="actividadEliminar">Eliminar Actividad</string>
+    <string name="actividadActualizar">Actualizar Actividad</string>
+    <string name="actividadConsultar">Consultar Actividad</string>
+    <string name="nomActividad">nomActividad</string>
+    <string name="tipoActividad">tipoActividad</string>
+    <string name="idActividad">idActividad</string>
+    <!-- End of Actividad -->
 </resources>

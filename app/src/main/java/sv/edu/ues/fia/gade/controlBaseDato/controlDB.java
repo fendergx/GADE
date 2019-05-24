@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
+import sv.edu.ues.fia.gade.UsuarioNormal.Actividad.Actividad;
 import sv.edu.ues.fia.gade.UsuarioNormal.Asignatura.Asignatura;
 import sv.edu.ues.fia.gade.UsuarioNormal.Pensum.Pensum;
 import sv.edu.ues.fia.gade.UsuarioNormal.TipoActividad.TipoActividad;
@@ -63,6 +64,10 @@ public class controlDB extends SQLiteOpenHelper {
             //Pensum
             db.execSQL("CREATE TABLE PENSUM (idPensum INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL, anio INTEGER);");
             //End of Pensum
+
+            //Actividad
+            db.execSQL("create table ACTIVIDAD(IDACTIVIDAD INTEGER not null, IDTIPOACTIVIDAD INTEGER not null, IDDOCENTE INTEGER not null, NOMACTIVIDAD TEXT not null, primary key(IDACTIVIDAD, IDTIPOACTIVIDAD, IDDOCENTE))");
+            //End of Actividad
 
             //Tipo Actividad
             db.execSQL("create table TIPOACTIVIDAD(IDTIPOACTIVIDAD INTEGER PRIMARY KEY AUTOINCREMENT,NOMTIPOACTIVIDAD TEXT not null)");
@@ -134,6 +139,7 @@ public class controlDB extends SQLiteOpenHelper {
             db.execSQL("DROP TABLE IF EXISTS GRUPO");
             db.execSQL("DROP TABLE IF EXISTS PRIORIDAD");
             db.execSQL("DROP TABLE IF EXISTS PENSUM");
+            db.execSQL("DROP TABLE IF EXISTS ACTIVIDAD");
         }catch (Exception e){
 
         }
@@ -281,10 +287,10 @@ public class controlDB extends SQLiteOpenHelper {
             insertOpcion(31,"Pensum", 2);
             insertOpcion(32,"Pensum", 3);
 
-            insertOpcion(33,"Carrera", 0);
-            insertOpcion(34,"Carrera", 1);
-            insertOpcion(35,"Carrera", 2);
-            insertOpcion(36,"Carrera", 3);
+            insertOpcion(33,"Actividad", 0);
+            insertOpcion(34,"Actividad", 1);
+            insertOpcion(35,"Actividad", 2);
+            insertOpcion(36,"Actividad", 3);
 
             //End of Opcion
 
@@ -772,6 +778,96 @@ public class controlDB extends SQLiteOpenHelper {
         return regEliminado;
     }
     //End of Pensum
+
+    //Actividad
+    private static final String[]camposActividad = new String [] {"idactividad", "idtipoactividad", "iddocente", "nomactividad"};
+
+    public String insertActividad(Actividad actividad) // lo necesitaba
+    {
+        String regInsertado = "Actividad: ";
+        long contador = 0;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("IDACTIVIDAD",actividad.getIdActividad());
+        contentValues.put("IDTIPOACTIVIDAD",actividad.getTipoActividad());
+        contentValues.put("IDDOCENTE",actividad.getIdDocente());
+        contentValues.put("NOMACTIVIDAD",actividad.getNomActividad());
+        contador = db.insert("ACTIVIDAD", null,contentValues);
+        if(contador == -1 || contador == 0){
+            regInsertado = "Ya existe la actividad." + actividad.getIdActividad();
+        }else{
+            regInsertado = regInsertado + contador;
+        }
+        return regInsertado;
+    }
+
+    public Cursor getDataActividad(int idActividad) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("Select * from ACTIVIDAD WHERE IDACTIVIDAD= "+idActividad,null);
+        return cursor;
+    }
+
+
+    public String eliminarActividad(Actividad actividad)
+    {
+        String regEliminado = "Se elimino la actividad #";
+        SQLiteDatabase db = this.getWritableDatabase();
+        String idActividad = String.valueOf(actividad.getIdActividad());
+        String [] id = {idActividad};
+        int res = db.delete("ACTIVIDAD", "IDACTIVIDAD = ?",id);
+
+        if(res>0){
+            regEliminado += idActividad;
+        }else{
+            regEliminado = "Este registro no existe";
+        }
+        return regEliminado;
+    }
+
+    public String actualizarActividad(Actividad actividad)
+    {
+        String regAc = "Registro Actualizado #";
+        String idActividad = String.valueOf(actividad.getIdActividad());
+        String[] id = {idActividad};
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("idtipoactividad",actividad.getTipoActividad());
+        cv.put("iddocente",actividad.getIdDocente());
+        cv.put("nomactividad",actividad.getNomActividad());
+        int resultado = db.update("actividad",cv,"idactividad = ?",id);
+
+        if(resultado>0){
+            regAc += idActividad;
+        }else{
+            regAc = "No se encuentra registro Actividad para ser actualizado";
+        }
+        return regAc;
+    }
+
+
+    public  Actividad consultarActividad(String act) // lo necesitaba
+    {
+        String [] idAct = {act};
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query("actividad", camposActividad, "idactividad = ?", idAct, null, null, null);
+        if (cursor.moveToFirst())
+        {
+            Actividad actividad = new Actividad();
+
+            actividad.setIdActividad(cursor.getInt(0));
+            actividad.setTipoActividad(cursor.getInt(1));
+            actividad.setIdDocente(cursor.getInt(2));
+            actividad.setNomActividad(cursor.getString(3));
+
+            return actividad;
+        }
+        else {
+            return null;
+        }
+    }
+    //End of Actividad
 
     //PARA INSERTAR Asignatura
     public boolean insertData(String codigo,String name, String unidades, String nivel,String tipoAsignatura){
