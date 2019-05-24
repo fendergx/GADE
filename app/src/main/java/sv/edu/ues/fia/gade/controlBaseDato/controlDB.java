@@ -44,7 +44,7 @@ public class controlDB extends SQLiteOpenHelper {
 
             //Tablas que faltaban.
             db.execSQL("create table ACTIVIDAD(IDACTIVIDAD INTEGER not null, IDTIPOACTIVIDAD INTEGER not null, IDDOCENTE INTEGER not null, NOMACTIVIDAD TEXT not null, primary key(IDACTIVIDAD, IDTIPOACTIVIDAD, IDDOCENTE))");
-            db.execSQL("create table TIPOACTIVIDAD(IDTIPOACTIVIDAD INTEGER not null,NOMTIPOACTIVIDAD TEXT not null,primary key (IDTIPOACTIVIDAD))");
+            //db.execSQL("create table TIPOACTIVIDAD(IDTIPOACTIVIDAD INTEGER not null,NOMTIPOACTIVIDAD TEXT not null,primary key (IDTIPOACTIVIDAD))");
             //db.execSQL("create table DOCENTE(IDDOCENTE INTEGER not null,IDESCUELA INTEGER not null,NOMDOCENTE TEXT not null,primary key (IDDOCENTE, IDESCUELA))");
 
             //Docente
@@ -73,12 +73,12 @@ public class controlDB extends SQLiteOpenHelper {
 
             //TIPOASIGNATURA
             db.execSQL("CREATE TABLE TipoAsignatura (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT UNIQUE NOT NULL)");
-            db.execSQL("INSERT INTO TipoAsignatura values(1,'Calculo')");
-            db.execSQL("INSERT INTO TipoAsignatura values(2,'Económica')");
-            db.execSQL("INSERT INTO TipoAsignatura values(3,'Legislativa')");
-            db.execSQL("INSERT INTO TipoAsignatura values(4,'Industrial')");
-            db.execSQL("INSERT INTO TipoAsignatura values(5,'Programación')");
-            db.execSQL("INSERT INTO TipoAsignatura values(6,'Humanística')");
+            db.execSQL("INSERT INTO TipoAsignatura values(1, 'Calculo')");
+            db.execSQL("INSERT INTO TipoAsignatura values(2, 'Económica')");
+            db.execSQL("INSERT INTO TipoAsignatura values(3, 'Legislativa')");
+            db.execSQL("INSERT INTO TipoAsignatura values(4, 'Industrial')");
+            db.execSQL("INSERT INTO TipoAsignatura values(5, 'Programación')");
+            db.execSQL("INSERT INTO TipoAsignatura values(6, 'Humanística')");
             //ASIGNATURA
             db.execSQL("CREATE TABLE Asignatura (IDASIGNATURA INTEGER PRIMARY KEY AUTOINCREMENT, CODIGO TEXT NOT NULL UNIQUE, TIPOASIGNATURA INTEGER,NOMDOCENTE TEXT, UNIDADESVALORATIVAS INTEGER, NIVELCICLO INTEGER)");
             db.execSQL("INSERT INTO Asignatura values(1,'MAT-115',1,'Mejia',4,1)");
@@ -98,11 +98,11 @@ public class controlDB extends SQLiteOpenHelper {
 
             //TIPOLOCAL
             db.execSQL("CREATE TABLE TipoLocal (IDTIPOLOCAL INTEGER PRIMARY KEY AUTOINCREMENT, NOMTIPO TEXT NOT NULL UNIQUE)");
-            db.execSQL("INSERT INTO TipoLocal values(1,'Salon Normal')");
-            db.execSQL("INSERT INTO TipoLocal values(2,'Laboratorio UCB')");
-            db.execSQL("INSERT INTO TipoLocal values(3,'Laboratorio computo')");
-            db.execSQL("INSERT INTO TipoLocal values(4,'Infocentro')");
-            db.execSQL("INSERT INTO TipoLocal values(5,'Auditorio')");
+            db.execSQL("INSERT INTO TipoLocal values(1, 'Salon Normal')");
+            db.execSQL("INSERT INTO TipoLocal values(2, 'Laboratorio UCB')");
+            db.execSQL("INSERT INTO TipoLocal values(3, 'Laboratorio computo')");
+            db.execSQL("INSERT INTO TipoLocal values(4, 'Infocentro')");
+            db.execSQL("INSERT INTO TipoLocal values(5, 'Auditorio')");
 
             //LOCALES
             db.execSQL("CREATE TABLE Local (IDLOCAL INTEGER PRIMARY KEY AUTOINCREMENT, CODIGOLOCAL TEXT NOT NULL UNIQUE,CAPACIDAD INTEGER, DESCRIPCION TEXT, TIENESILLA TEXT, TIENESONIDO TEXT, TIPOPIZARRA TEXT, TIPOLOCAL INTEGER)");
@@ -126,6 +126,8 @@ public class controlDB extends SQLiteOpenHelper {
             db.execSQL("DROP TABLE IF EXISTS ESCUELA");
             db.execSQL("DROP TABLE IF EXISTS LOCAL");
             db.execSQL("DROP TABLE IF EXISTS TIPOACTIVIDAD");
+            db.execSQL("DROP TABLE IF EXISTS GRUPO");
+            db.execSQL("DROP TABLE IF EXISTS PRIORIDAD");
         }catch (Exception e){
 
         }
@@ -409,7 +411,7 @@ public class controlDB extends SQLiteOpenHelper {
 
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(horarioCol1, horario.getIdHorario());
+        //contentValues.put(horarioCol1, horario.getIdHorario());
         contentValues.put(horarioCol2, horario.getDesde());
         contentValues.put(horarioCol3, horario.getHasta());
         contentValues.put(horarioCol4, horario.getDia());
@@ -718,7 +720,7 @@ public class controlDB extends SQLiteOpenHelper {
         ArrayList<TipoLocal> locales = new ArrayList<TipoLocal>();
         SQLiteDatabase db = getWritableDatabase();
         try{
-            Cursor c = db.rawQuery("select * from TIPOLOCAL",null);
+            Cursor c = db.rawQuery("select IDTIPOLOCAL, NOMTIPO from TIPOLOCAL",null);
             if (c!=null && c.getCount()>0){
                 while (c.moveToNext()){
                     locales.add(new TipoLocal(c.getInt(0),c.getString(1)));
