@@ -11,8 +11,8 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import sv.edu.ues.fia.gade.MainActivity;
 import sv.edu.ues.fia.gade.R;
+import sv.edu.ues.fia.gade.UsuarioNormal.Asignatura.AsignaturaConsultarActivity;
 import sv.edu.ues.fia.gade.controlBaseDato.controlDB;
 
 public class ConsultarTipoAsignatura extends AppCompatActivity {
@@ -25,7 +25,7 @@ public class ConsultarTipoAsignatura extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_consultar_tipo_asignatura);
+        setContentView(R.layout.activity_tipo_asignatura_consultar);
         myDb = new controlDB(this);
         nuevo = (Button) findViewById(R.id.btnNuevo);
         if(getSupportActionBar()!=null){
@@ -54,7 +54,7 @@ public class ConsultarTipoAsignatura extends AppCompatActivity {
         btnRegresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent=new Intent(getApplicationContext(), AsignaturaConsultarActivity.class);
                 startActivity(intent);
             }
         });

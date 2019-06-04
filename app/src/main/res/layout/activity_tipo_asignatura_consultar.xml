@@ -3,15 +3,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UsuarioNormal.TipoAsignatura.TipoAsignaturaConsultarActivity"
+    tools:context=".TipoAsignatura.ConsultarTipoAsignatura"
     android:orientation="vertical">
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+
+        android:textAlignment="center"
+        android:textSize="30dp"
+        android:text="TIPO DE ASIGNATURA" />
+    <LinearLayout
+        android:id="@+id/menuLinearLayout"
+        android:layout_below="@+id/midTableLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <Button
+            android:id="@+id/btnNuevo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nuevo Tipo de Asignatura"/>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Para Editar Presione un registro prologadamente" />
+    </LinearLayout>
+
 
     <ListView
         android:id="@+id/listaTipoAsignatura"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_width="300dp"
-        android:layout_height="400dp"
+        android:layout_height="350dp"
         android:scrollbarAlwaysDrawHorizontalTrack="true">
     </ListView>
 
