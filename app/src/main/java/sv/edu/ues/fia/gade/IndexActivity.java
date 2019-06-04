@@ -49,6 +49,9 @@ public class IndexActivity extends ListActivity {
         menu = new String[accesos.size()];
         valor = new String[accesos.size()];
         int i = 0;
+//      //menu[i] = "Solicitud";
+        //valor[i] = "Solicitud.ConsultarSolicitud";
+        //i++;
         //Toast.makeText(this, accesos.size(),Toast.LENGTH_SHORT).show();
         for(AccesoUsuario au : accesos){
             menu[i] = au.getIdUser();

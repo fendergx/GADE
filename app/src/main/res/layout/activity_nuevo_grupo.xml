@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="sv.edu.ues.fia.gade.UsuarioNormal.Grupo.NuevoGrupo">
+
+    <TextView
+        android:id="@+id/text_view_id"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Numero de grupo" />
+    <EditText
+        android:id="@+id/numero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLength="3"
+        android:inputType="number"
+        android:hint="Numero de grupo"/>
+    <TextView
+        android:id="@+id/text_view_idx"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Tipo de grupo" />
+    <EditText
+        android:id="@+id/tipoGrupo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLength="20"
+        android:hint="Escriba aqui..."/>
+    <TextView
+        android:id="@+id/text_view_id2"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Asignatura" />
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="50dp"
+        >
+
+    </Spinner>
+    <TextView
+        android:id="@+id/text_view_id3"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Alumnos inscritos" />
+    <EditText
+        android:id="@+id/inscritos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:maxLength="4"
+        android:hint="Numero"
+        />
+    <TextView
+        android:id="@+id/text_view_id4"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Cupos del grupo" />
+    <EditText
+        android:id="@+id/cupo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:maxLength="4"
+        android:hint="Numero"
+        />
+
+    <LinearLayout
+        android:id="@+id/menuLinearLayout"
+        android:layout_below="@+id/midTableLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3">
+        <Button
+            android:id="@+id/btnGuardar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Guardar"/>
+        <Button
+            android:id="@+id/btnLimpiar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Limpiar"/>
+        <Button
+            android:id="@+id/btnCancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancelar"/></LinearLayout>
+</LinearLayout>

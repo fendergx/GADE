@@ -1,80 +1,64 @@
-package sv.edu.ues.fia.gade.UsuarioNormal.Local;
+package sv.edu.ues.fia.gade.UsuarioNormal.Solicitud;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.content.Intent;
+import android.view.View;
+import sv.edu.ues.fia.gade.controlBaseDato.controlDB;
+import sv.edu.ues.fia.gade.R;
 
 import java.util.ArrayList;
 
-import sv.edu.ues.fia.gade.R;
-import sv.edu.ues.fia.gade.controlBaseDato.controlDB;
-
-public class LocalConsultarActivity extends AppCompatActivity {
-
+public class ConsultarSolicitud extends AppCompatActivity {
     controlDB myDb;
-    Button btnNuevoLocal, tipoLocales;
+    Button nuevo;
     private ListView lista;
-    private ArrayList<Local> localArrayList;
+    private ArrayList<Solicitud> listaArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_local_consultar);
-
+        setContentView(R.layout.activity_consultar_solicitud);
         myDb = new controlDB(this);
-        btnNuevoLocal = (Button) findViewById(R.id.btnNuevoLocal);
-        tipoLocales = (Button) findViewById(R.id.mostrarTipoLocal);
+        nuevo = (Button) findViewById(R.id.btnNuevo);
         if(getSupportActionBar()!=null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-
-        localArrayList = myDb.getLocales();
-        lista = (ListView) findViewById(R.id.listaTipoAsignatura);
+        listaArrayList = myDb.getSolicitudes();
+        lista = (ListView) findViewById(R.id.listaSolicitud);
         ArrayList<String> Lista_para_tipo = new ArrayList<>();
-        for(Local l : localArrayList){
-            Lista_para_tipo.add(l.getCodigoLocal());
+        for(Solicitud l : listaArrayList){
+            Lista_para_tipo.add(l.getNombreTipoSolicitud());
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, Lista_para_tipo);
         lista.setAdapter(adapter);
-
         lista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(getApplicationContext(), LocalActualizarActivity.class);
-                String idAsig=String.valueOf(localArrayList.get(position).getIdLocal());
+                Intent i = new Intent(getApplicationContext(), ActualizarSolicitud.class);
+                String idAsig=String.valueOf(listaArrayList.get(position).getId());
                 i.putExtra("Value",idAsig);
-
                 startActivity(i);
                 return false;
             }
         });
-
-
-        btnNuevoLocal.setOnClickListener(new View.OnClickListener() {
+        nuevo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), LocalInsertarActivity.class);
+                Intent i = new Intent(getApplicationContext(), NuevaSolicitud.class);
                 startActivity(i);
             }
         });
-        /*tipoLocales.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), TipoLocalConsultarActivity.class);
-                startActivity(i);
-            }
-        });*/
+
     }
+    @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return false;
     }
-
-
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="sv.edu.ues.fia.gade.UsuarioNormal.TipoAsignatura.ActualizarTipoAsignatura">
+
+    <TextView
+        android:id="@+id/text_view_idx2"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Id de TipoAsignatura" />
+    <EditText
+        android:id="@+id/id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLength="50"
+        android:editable="false"/>
+    <TextView
+        android:id="@+id/text_view_idx"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Nombre del Tipo de Asignatura" />
+    <EditText
+        android:id="@+id/nombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLength="50"
+        android:hint="Escriba aqui..."/>
+
+
+    <Button
+        android:id="@+id/btnGuardar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Guardar"/>
+    <Button
+        android:id="@+id/btnEliminar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Eliminar"/>
+    <Button
+        android:id="@+id/btnCancelar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancelar"/>
+</LinearLayout>

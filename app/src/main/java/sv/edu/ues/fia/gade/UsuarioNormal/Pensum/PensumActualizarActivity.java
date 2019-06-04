@@ -23,8 +23,8 @@ public class PensumActualizarActivity extends Activity {
 
         helper = new controlDB(this);
 
-        et_id_pensum = (EditText) findViewById(R.id.et_id_pensum);
-        et_nombre = (EditText) findViewById(R.id.et_nombre_pensum);
+        et_id_pensum = findViewById(R.id.et_id_pensum);
+        et_nombre = findViewById(R.id.et_nombre_pensum);
         et_anio = findViewById(R.id.et_anio_pensum);
     }
 

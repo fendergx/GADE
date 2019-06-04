@@ -13,16 +13,18 @@ import sv.edu.ues.fia.gade.controlBaseDato.controlDB;
 public class CarreraActualizarActivity extends Activity {
 
     private controlDB helper;
-    private EditText editIdEscuela,editIdCarrera,editNomCarrera;
+    private EditText editIdEscuela;
+    private EditText editIdCarrera;
+    private EditText editNomCarrera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carrera_actualizar);
         helper = new controlDB(this);
-        editIdEscuela = (EditText) findViewById(R.id.editIdEscuela);
-        editIdCarrera = (EditText) findViewById(R.id.editIdCarrera);
-        editNomCarrera = (EditText) findViewById(R.id.editNomCarrera);
+        editIdEscuela = findViewById(R.id.editIdEscuela);
+        editIdCarrera = findViewById(R.id.editIdCarrera);
+        editNomCarrera = findViewById(R.id.editNomCarrera);
     }
 
     public void actualizarCarrera(View v) {

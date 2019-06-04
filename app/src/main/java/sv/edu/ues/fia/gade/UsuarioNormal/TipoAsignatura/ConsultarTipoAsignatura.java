@@ -1,8 +1,9 @@
-package sv.edu.ues.fia.gade.UsuarioNormal.Local;
+package sv.edu.ues.fia.gade.UsuarioNormal.TipoAsignatura;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,69 +13,65 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import sv.edu.ues.fia.gade.R;
+import sv.edu.ues.fia.gade.UsuarioNormal.Asignatura.AsignaturaConsultarActivity;
 import sv.edu.ues.fia.gade.controlBaseDato.controlDB;
 
-public class LocalConsultarActivity extends AppCompatActivity {
-
+public class ConsultarTipoAsignatura extends AppCompatActivity {
     controlDB myDb;
-    Button btnNuevoLocal, tipoLocales;
+    Button btnRegresar;
+    Button nuevo;
     private ListView lista;
-    private ArrayList<Local> localArrayList;
+    private ArrayList<TipoAsignatura> tipoAsignaturaArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_local_consultar);
-
+        setContentView(R.layout.activity_consultar_tipo_asignatura);
         myDb = new controlDB(this);
-        btnNuevoLocal = (Button) findViewById(R.id.btnNuevoLocal);
-        tipoLocales = (Button) findViewById(R.id.mostrarTipoLocal);
+        nuevo = (Button) findViewById(R.id.btnNuevo);
         if(getSupportActionBar()!=null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-
-        localArrayList = myDb.getLocales();
+        tipoAsignaturaArrayList = myDb.getTipoAsignaturas();
         lista = (ListView) findViewById(R.id.listaTipoAsignatura);
+        btnRegresar=(Button)findViewById(R.id.btnCancelar);
         ArrayList<String> Lista_para_tipo = new ArrayList<>();
-        for(Local l : localArrayList){
-            Lista_para_tipo.add(l.getCodigoLocal());
+        for(TipoAsignatura l : tipoAsignaturaArrayList){
+            Lista_para_tipo.add(l.getNombreTipoAsignatura());
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, Lista_para_tipo);
         lista.setAdapter(adapter);
-
         lista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(getApplicationContext(), LocalActualizarActivity.class);
-                String idAsig=String.valueOf(localArrayList.get(position).getIdLocal());
+                Intent i = new Intent(getApplicationContext(), ActualizarTipoAsignatura.class);
+                String idAsig=String.valueOf(tipoAsignaturaArrayList.get(position).getIdTipoAsignatura());
                 i.putExtra("Value",idAsig);
-
                 startActivity(i);
                 return false;
             }
         });
-
-
-        btnNuevoLocal.setOnClickListener(new View.OnClickListener() {
+        btnRegresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), LocalInsertarActivity.class);
+                Intent intent=new Intent(getApplicationContext(), AsignaturaConsultarActivity.class);
+                startActivity(intent);
+            }
+        });
+        nuevo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), NuevoTipoAsignatura.class);
                 startActivity(i);
             }
         });
-        /*tipoLocales.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), TipoLocalConsultarActivity.class);
-                startActivity(i);
-            }
-        });*/
+
     }
+    @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return false;
     }
-
 
 }
