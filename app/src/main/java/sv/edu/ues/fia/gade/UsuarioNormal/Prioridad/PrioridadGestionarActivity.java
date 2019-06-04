@@ -11,7 +11,7 @@ public class PrioridadGestionarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         String user = getIntent().getExtras().getString("user");
-        Intent i = new Intent(this, PrioridadConsultarActivity.class);
+        Intent i = new Intent(this, ConsultarPrioridad.class);
 
         i.putExtra("user", user);
 

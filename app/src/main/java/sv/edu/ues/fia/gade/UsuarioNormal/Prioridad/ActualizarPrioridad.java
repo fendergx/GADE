@@ -1,6 +1,7 @@
 package sv.edu.ues.fia.gade.UsuarioNormal.Prioridad;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,31 +13,42 @@ import sv.edu.ues.fia.gade.R;
 import sv.edu.ues.fia.gade.UsuarioNormal.Funciones;
 import sv.edu.ues.fia.gade.controlBaseDato.controlDB;
 
-public class NuevaPrioridad extends AppCompatActivity {
-    EditText nombre;
+public class ActualizarPrioridad extends AppCompatActivity {
+    EditText nombre,id;
     controlDB myDb;
-    Button btnClick,btnCancelar,btnLimpiar;
+    Button btnClick,btnCancelar,btnEliminar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nueva_prioridad);
+        setContentView(R.layout.activity_actualizar_prioridad);
         myDb = new controlDB(this);
-        nombre = (EditText)  findViewById(R.id.nombre);
+        final String valor = getIntent().getExtras().getString("Value");
+        Cursor cursor = myDb.buscar("PRIORIDAD",valor,"IDPRIORIDAD");
+        if(cursor!=null && cursor.getCount()>0){
+            cursor.moveToFirst();
+        }
+        nombre = (EditText) findViewById(R.id.nombre);
+        id = (EditText) findViewById(R.id.id);
         btnClick = (Button) findViewById(R.id.btnGuardar);
         btnCancelar = (Button) findViewById(R.id.btnCancelar);
-        btnLimpiar = (Button) findViewById(R.id.btnLimpiar);
-
-        btnLimpiar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                nombre.setText("");
-            }
-        });
+        btnEliminar = (Button) findViewById(R.id.btnEliminar);
+        id.setText(cursor.getString(0));
+        nombre.setText(cursor.getString(1));
         btnClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClickMe();
+                ClickMe(valor);
+            }
+        });
+        btnEliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int delete = myDb.deleteDataPrioridad(valor);
+                Intent intent=new Intent(getApplicationContext(), ConsultarPrioridad.class);
+                startActivity(intent);
+                Toast.makeText(getApplicationContext(), "Datos borrados correctamente", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -47,16 +59,15 @@ public class NuevaPrioridad extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         if(getSupportActionBar()!=null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
     }
-    private void ClickMe(){
+    private void ClickMe(String id){
         String num = nombre.getText().toString().trim();
         if(!num.isEmpty()){
-            Boolean result = myDb.insertDataPrioridad(num);
+            Boolean result = myDb.updateDataPrioridad(id,num);
             if (result == true){
                 Toast.makeText(this, "Datos insertados correctamente", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), ConsultarPrioridad.class);
@@ -64,11 +75,11 @@ public class NuevaPrioridad extends AppCompatActivity {
             }else{
                 Toast.makeText(this, "Datos no insertados correctamente", Toast.LENGTH_SHORT).show();
             }
-        }else{
+        } else{
             Funciones.showAlert(this,"Guardar Prioridad","No puede tener campos vacíos");
         }
-    }
 
+    }
 
     public boolean onSupportNavigateUp() {
         onBackPressed();
