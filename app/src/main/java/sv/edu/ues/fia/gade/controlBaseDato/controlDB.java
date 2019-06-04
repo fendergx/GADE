@@ -70,10 +70,12 @@ public class controlDB extends SQLiteOpenHelper {
 
             //Actividad
             db.execSQL("create table ACTIVIDAD(IDACTIVIDAD INTEGER not null, IDTIPOACTIVIDAD INTEGER not null, IDDOCENTE INTEGER not null, NOMACTIVIDAD TEXT not null, primary key(IDACTIVIDAD, IDTIPOACTIVIDAD, IDDOCENTE))");
+            db.execSQL("INSERT INTO ACTIVIDAD(IDACTIVIDAD, IDTIPOACTIVIDAD, IDDOCENTE, NOMACTIVIDAD) VALUES(1, 1, 1, 'Examen Parcial 1 Electronica 1')");
             //End of Actividad
 
             //Tipo Actividad
             db.execSQL("create table TIPOACTIVIDAD(IDTIPOACTIVIDAD INTEGER PRIMARY KEY AUTOINCREMENT, NOMTIPOACTIVIDAD TEXT not null)");
+            db.execSQL("INSERT INTO TIPOACTIVIDAD(IDTIPOACTIVIDAD, NOMTIPOACTIVIDAD) VALUES(1, 'Examen Parcial')");
             //End of Tipo Actividad
 
             //Carrera
@@ -104,9 +106,7 @@ public class controlDB extends SQLiteOpenHelper {
 
             //PRIORIDAD
             db.execSQL("CREATE TABLE Prioridad (IDPRIORIDAD INTEGER PRIMARY KEY AUTOINCREMENT, ETIQUETA TEXT NOT NULL UNIQUE)");
-            db.execSQL("INSERT INTO Prioridad values(1,'Demandada')");
-            db.execSQL("INSERT INTO Prioridad values(2,'Poca demanda')");
-            db.execSQL("INSERT INTO Prioridad values(3,'Sin mucha demanda')");
+
             //GRUPO
             /*db.execSQL("CREATE TABLE Grupo (IDGRUPO INTEGER PRIMARY KEY AUTOINCREMENT, TIPOGRUPO TEXT NOT NULL UNIQUE, ASIGNATURA INTEGER, INSCRITOS INTEGER, CUPO INTEGER)");
             db.execSQL("INSERT INTO Grupo values(1,'Teorico',1,20,20)");
@@ -187,26 +187,7 @@ public class controlDB extends SQLiteOpenHelper {
 
     public boolean llenarDBGp01() {
         try {
-
             //User
-            ArrayList<OpcionCrud> option = new ArrayList<>();
-            ArrayList<AccesoUsuario> accesoUsuarios = new ArrayList<>();
-
-            /*option.add(new OpcionCrud("CREAR USUARIO", 1, 1));
-            option.add(new OpcionCrud("EDITAR USUARIO", 2, 2));
-            option.add(new OpcionCrud("ELIMINAR USUARIO", 3, 3));
-            option.add(new OpcionCrud("SELECCIONAR USUARIO", 4, 4));
-
-            option.add(new OpcionCrud("CREAR LOCAL", 5, 1));
-            option.add(new OpcionCrud("EDITAR LOCAL", 6, 2));
-            option.add(new OpcionCrud("ELIMINAR LOCAL", 7, 3));
-            option.add(new OpcionCrud("SELECCIONAR LOCAL", 8, 4));
-
-            option.add(new OpcionCrud("CREAR RESERVACION", 9, 1));
-            option.add(new OpcionCrud("EDITAR RESERVACION", 10, 2));
-            option.add(new OpcionCrud("ELIMINAR RESERVACION", 11, 3));
-            option.add(new OpcionCrud("SELECCIONAR RESERVACION", 12, 4));*/
-
             ArrayList<Usuario> users = new ArrayList<>();
 
             users.add(new Usuario("Ever", "aaa115", 2));
@@ -216,18 +197,6 @@ public class controlDB extends SQLiteOpenHelper {
             users.add(new Usuario("Mauricio", "aaa115", 2));
             users.add(new Usuario("Cesar", "cos115", 1));
 
-            /*int i = 1;
-            for (OpcionCrud op : option) {
-                insertOpcion(op.getIdOpcion(), op.getNombreCRUD(), op.getNumCRUD());
-                for (Usuario u : users) {
-                    if (op.getNumCRUD() == 4) {
-                        //insertAcceso(u.getUsername(), op.getIdOpcion());
-                    } else if (u.getTipo() == 2) {
-                        //insertAcceso(u.getUsername(), op.getIdOpcion());
-                    }
-                }
-            }*/
-
             for (Usuario u : users) {
                 insertUser(u.getUsername(), u.getClave(), u.getTipo());
             }
@@ -236,13 +205,37 @@ public class controlDB extends SQLiteOpenHelper {
             //Docente
             ArrayList<Docente> docentes = new ArrayList<>();
 
-            docentes.add(new Docente(3, 115, "Nelly"));
-            docentes.add(new Docente(5, 120, "Salvador German"));
+            docentes.add(new Docente(1,1,"Jose Ramos"));
+            docentes.add(new Docente(2, 2, "Nelly"));
+            docentes.add(new Docente(3, 1, "Salvador German"));
 
             for (Docente d : docentes) {
                 insertDocente(d);
             }
             //End of Docente
+
+            //Escuela
+            ArrayList<Escuela> escuelas = new ArrayList<>();
+
+            escuelas.add(new Escuela(1,"Escuela de Ingenieria Electrica"));
+            escuelas.add(new Escuela(1,"Escuela de Ingenieria Industrial"));
+
+            for (Escuela e : escuelas) {
+                insertEscuela(e);
+            }
+            //End of Escuela
+
+            //Carrera
+            ArrayList<Carrera> carreras = new ArrayList<>();
+
+            carreras.add(new Carrera(1, 1,"Civil"));
+            carreras.add(new Carrera(2, 2,"Quimica"));
+
+            for(Carrera car: carreras)
+            {
+                insertCarrera(car);
+            }
+            //End of Carrera
 
             //Horario
             ArrayList<Horario> horarios = new ArrayList<>();
@@ -263,6 +256,18 @@ public class controlDB extends SQLiteOpenHelper {
             for(TipoActividad ta : tipoActividades) {
                 insertTipoActividad(ta);
             }
+            //End of Actividad
+
+            //Prioridad
+            ArrayList<Prioridad> prioridades = new ArrayList<>();
+
+            prioridades.add(new Prioridad(1, "Demanda"));
+            prioridades.add(new Prioridad(2, "Poca Demanda"));
+            prioridades.add(new Prioridad(3, "Sin Mucha Demanda"));
+
+            for(Prioridad p : prioridades){
+                insertDataPrioridad(p.getEtiqueta());
+            }
             //End of TipoActividad
 
             //Acceso
@@ -282,10 +287,6 @@ public class controlDB extends SQLiteOpenHelper {
             insertAcceso("Mauricio", 37);
 
             insertAcceso("Doris", 17);
-
-            //insertAcceso("Carlos", 6);
-            //insertAcceso("Carlos", 7);
-            //End of Acceso
 
             //Opcion
             insertOpcion(1,"TipoActividad", 0);
@@ -333,10 +334,10 @@ public class controlDB extends SQLiteOpenHelper {
             insertOpcion(35,"Actividad", 2);
             insertOpcion(36,"Actividad", 3);
 
-            /*insertOpcion(37,"Carrera", 0);
+            insertOpcion(37,"Carrera", 0);
             insertOpcion(38,"Carrera", 1);
             insertOpcion(39,"Carrera", 2);
-            insertOpcion(40,"Carrera", 3);*/
+            insertOpcion(40,"Carrera", 3);
 
             insertOpcion(41,"Solicitud", 0);
 
@@ -344,18 +345,6 @@ public class controlDB extends SQLiteOpenHelper {
             insertOpcion(43,"TipoLocal", 0);
             insertOpcion(44,"TipoAsignatura", 0);
             //End of Opcion
-
-            //Carrera
-            ArrayList<Carrera> carreras = new ArrayList<>();
-
-            carreras.add(new Carrera(1, 5,"Civil"));
-            carreras.add(new Carrera(3, 5,"Quimica"));
-
-            for(Carrera car: carreras)
-            {
-                insertCarrera(car);
-            }
-            //End of Carrera
 
             return true;
         } catch (Exception e) {
@@ -768,7 +757,7 @@ public class controlDB extends SQLiteOpenHelper {
     public static final String pensumCol3 = "anio";
 
     public  String insertPensum(Pensum pensum) {
-        String regInsertado = "Escuela: ";
+        String regInsertado = "Pensum: ";
         long contador = 0;
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -1115,25 +1104,6 @@ public class controlDB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         int variable = db.delete("LOCAL","IDLOCAL=?",new String[]{id});
         return variable;
-    }
-
-    //PARA Consultar Prioridad
-    public ArrayList<Prioridad> getPrioridades(){
-        ArrayList<Prioridad> locales = new ArrayList<>();
-        SQLiteDatabase db = getWritableDatabase();
-        try{
-            Cursor c = db.rawQuery("select * from PRIORIDAD",null);
-            if (c!=null && c.getCount()>0){
-                while (c.moveToNext()){
-                    locales.add(new Prioridad(c.getInt(0),c.getString(1)));
-                }
-            }
-            c.close();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        db.close();
-        return locales;
     }
 
     public ArrayList<Local> getLocales(){
@@ -1505,6 +1475,63 @@ public class controlDB extends SQLiteOpenHelper {
 
     }
     //FIN CRUD TIPOASIGNATURA
+
+    //CRUD PRIORIDAD
+    /** consultar**/
+    //PARA Consultar ConsultarPrioridad
+    public ArrayList<Prioridad> getPrioridades(){
+        ArrayList<Prioridad> locales = new ArrayList<Prioridad>();
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            Cursor c = db.rawQuery("select * from PRIORIDAD",null);
+            if (c!=null && c.getCount()>0){
+                while (c.moveToNext()){
+                    locales.add(new Prioridad(c.getInt(0),c.getString(1)));
+                }
+            }
+            c.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        db.close();
+        return locales;
+    }
+
+    public boolean updateDataPrioridad(String id,String nombre){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentvalues = new ContentValues();
+        contentvalues.put("ETIQUETA", nombre);
+        int variable = db.update("PRIORIDAD",contentvalues,"IDPRIORIDAD=?",new String[]{id});
+        if(variable>0){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+    public Integer deleteDataPrioridad(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int variable= db.delete("PRIORIDAD","IDPRIORIDAD=?",new String[]{id});
+
+        return variable;
+    }
+
+    public boolean insertDataPrioridad(String nombreTipoSolicitud){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentvalues = new ContentValues();
+        contentvalues.put("ETIQUETA", nombreTipoSolicitud);
+        long result = db.insert("PRIORIDAD",null,contentvalues);
+        db.close();
+
+        //To check whether Data is Inserted in DataBase
+        if(result==-1){
+            return false;
+        }else{
+            return true;
+        }
+
+    } //Fin INSERTAR
 }
 
 

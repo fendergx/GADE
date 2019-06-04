@@ -22,7 +22,7 @@ public class CarreraGestionarActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_carrera_gestionar);
+        //setContentView(R.layout.activity_carrera_gestionar);
 
         String user = getIntent().getExtras().getString("user");
         controlDB helper = new controlDB(this);
@@ -53,7 +53,7 @@ public class CarreraGestionarActivity extends ListActivity {
         //l.getChildAt(position).setBackgroundColor(Color.rgb(128, 128, 0));
 
         try {
-            Class<?> clase = Class.forName("sv.edu.ues.fia.gade.UsuarioNormal." + nombreValue);
+            Class<?> clase = Class.forName("sv.edu.ues.fia.gade.UsuarioNormal.Carrera." + nombreValue);
             Intent inte = new Intent(this, clase);
             this.startActivity(inte);
         } catch (ClassNotFoundException e) {

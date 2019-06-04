@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 import sv.edu.ues.fia.gade.controlBaseDato.controlDB;
 
-public class PensumGesionarActivity extends ListActivity {
+public class PensumGestionarActivity extends ListActivity {
 
     String[] menus = {"Consultar Pensum", "Insertar Pensum", "Eliminar Pensum", "Actualizar Pensum"};
     String[] activities = {"PensumConsultarActivity", "PensumInsertarActivity", "PensumEliminarActivity", "PensumActualizarActivity"};

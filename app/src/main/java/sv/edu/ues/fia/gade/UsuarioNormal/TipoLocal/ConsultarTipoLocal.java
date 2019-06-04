@@ -1,9 +1,8 @@
 package sv.edu.ues.fia.gade.UsuarioNormal.TipoLocal;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
-import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,7 +23,7 @@ public class ConsultarTipoLocal extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tipo_local_consultar);
+        setContentView(R.layout.activity_consultar_tipo_local);
         myDb = new controlDB(this);
         nuevo = (Button) findViewById(R.id.btnNuevo);
         if(getSupportActionBar()!=null){

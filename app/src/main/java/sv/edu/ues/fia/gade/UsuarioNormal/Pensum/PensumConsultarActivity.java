@@ -29,7 +29,7 @@ public class PensumConsultarActivity extends Activity {
         et_anio = findViewById(R.id.et_anio_pensum);
     }
 
-    public void consultarEscuela(View v)
+    public void consultarPensum(View v)
     {
         //helper.abrir();
         Pensum pensum = helper.consultarPensum(et_id_pensum.getText().toString());
