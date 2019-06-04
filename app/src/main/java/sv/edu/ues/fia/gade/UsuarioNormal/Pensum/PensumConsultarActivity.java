@@ -39,7 +39,7 @@ public class PensumConsultarActivity extends Activity {
             Toast.makeText(this, "Pensum Con Identificador " + et_id_pensum.getText().toString() + " no encontrado", Toast.LENGTH_LONG).show();
         else {
             et_nombre.setText(pensum.getNombre());
-            et_anio.setText(pensum.getAnio());
+            et_anio.setText(String.valueOf(pensum.getAnio()));
         }
     }
 
