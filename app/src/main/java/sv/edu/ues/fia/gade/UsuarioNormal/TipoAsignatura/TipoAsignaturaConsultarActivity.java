@@ -49,6 +49,7 @@ public class TipoAsignaturaConsultarActivity extends AppCompatActivity {
             }
         });
 
+
     }
     @Override
     public boolean onSupportNavigateUp() {

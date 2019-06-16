@@ -276,6 +276,7 @@ public class controlDB extends SQLiteOpenHelper {
             }
 
             insertAcceso("Miguel", 9);
+            insertAcceso("Miguel",10);
             insertAcceso("Miguel", 13);
             insertAcceso("Miguel", 29);
 
@@ -1096,7 +1097,14 @@ public class controlDB extends SQLiteOpenHelper {
     //PARA ELIMINAR Asignatura
     public Integer deleteData(String id){
         SQLiteDatabase db = this.getWritableDatabase();
-        int variable = db.delete("ASIGNATURA","IDASIGNATURA=?",new String[]{id});
+        int variable;
+        Cursor c = db.rawQuery("select * from GRUPO WHERE IDASIGNATURA="+id,null);
+        if(c.getCount()>0){
+            variable=0;
+        }else{
+            variable = db.delete("ASIGNATURA","IDASIGNATURA=?",new String[]{id});
+        }
+
         return variable;
     }
     //PARA ELIMINAR LOCAL

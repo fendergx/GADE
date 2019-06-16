@@ -11,7 +11,7 @@ public class TipoAsignaturaGestionarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         String user = getIntent().getExtras().getString("user");
-        Intent i = new Intent(this, TipoAsignaturaConsultarActivity.class);
+        Intent i = new Intent(this, ConsultarTipoAsignatura.class);
 
         i.putExtra("user", user);
 
